@@ -24,7 +24,7 @@ env = environ.Env()
 environ.Env.read_env(os.path.join(BASE_DIR, ".env"))
 
 # GDAL needed for postgris
-if env("GDAL_LIBRARY_PATH") and env("GEOS_LIBRARY_PATH"):
+if env("GDAL_LIBRARY_PATH", default=None) and env("GEOS_LIBRARY_PATH", default=None):
     GDAL_LIBRARY_PATH = env("GDAL_LIBRARY_PATH")
     GEOS_LIBRARY_PATH = env("GEOS_LIBRARY_PATH")
 
