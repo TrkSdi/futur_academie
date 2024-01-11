@@ -12,7 +12,9 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 import os
+import platform
 import environ
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,6 +22,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 env = environ.Env()
 environ.Env.read_env(os.path.join(BASE_DIR, ".env"))
+
+# GDAL needed for postgris
+if env("GDAL_LIBRARY_PATH") and env("GEOS_LIBRARY_PATH"):
+    GDAL_LIBRARY_PATH = env("GDAL_LIBRARY_PATH")
+    GEOS_LIBRARY_PATH = env("GEOS_LIBRARY_PATH")
+
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = env("SECRET_KEY")
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env("DEBUG")
@@ -39,6 +50,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     # Third-party installed apps
+    "django.contrib.gis",
     "axes",
     "admin_honeypot",
     "django_filters",
