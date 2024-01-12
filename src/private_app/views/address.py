@@ -2,15 +2,7 @@
 from rest_framework import serializers, viewsets
 
 # Local imports
-from private_app.models import (
-    Address,
-    Link,
-    Favorite,
-    School,
-    StudyProgram,
-    UserProfile,
-    User,
-)
+from private_app.models import Address
 
 
 class AddressSeralizer(serializers.ModelSerializer):
