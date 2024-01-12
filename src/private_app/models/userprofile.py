@@ -23,14 +23,14 @@ class UserProfile(models.Model):
     # mettre onetoonefield
     url_tiktok = models.OneToOneField(
         "Link",
-        related_name="profile",
+        related_name="profile_tiktok",
         on_delete=models.CASCADE,
         help_text="A url to the user's TikTok profile.",
     )
 
     url_instagram = models.OneToOneField(
         "Link",
-        related_name="profile",
+        related_name="profile_insta",
         on_delete=models.CASCADE,
         help_text="A url to the user's Instagram profile.",
     )
