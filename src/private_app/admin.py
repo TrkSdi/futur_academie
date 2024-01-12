@@ -2,18 +2,22 @@
 from django.contrib import admin
 
 # Local imports
-from .models import Address
+from .models import StudyProgram
 
 
-class AddressAdmin(admin.ModelAdmin):
+class StudyProgramAdmin(admin.ModelAdmin):
     list_display = (
-        "street_address",
-        "postcode",
-        "locality",
-        "geolocation",
+        "cod_aff_form",
+        "name",
+        "school",
+        "discipline",
+        "acceptance_rate",
+        "L1_success_rate",
+        "insertion_rate",
+        "insertion_time_period"
     )
-    list_filter = ("locality",)
-    search_fields = ("postcode", "locality")
+    list_filter = ("discipline", "school")
+    search_fields = ("name", "cod_aff_form", "description")
 
 
-admin.site.register(Address, AddressAdmin)
+admin.site.register(StudyProgram, StudyProgramAdmin)
