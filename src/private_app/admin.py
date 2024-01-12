@@ -2,7 +2,7 @@
 from django.contrib import admin
 
 # Local imports
-from .models import Address, Link, Favorite, School, StudyProgram
+from .models import Address, Link, Favorite, School, StudyProgram, UserProfile
 
 
 class AddressAdmin(admin.ModelAdmin):
@@ -22,11 +22,32 @@ class FavoriteAdmin(admin.ModelAdmin):
     search_fields = ("note",)
     list_per_page = 10
 
+
+class LinkInline(admin.TabularInline):
+    model = Link
+    extra = 1
+
+
+class UserProfileInline(admin.TabularInline):
+    model = UserProfile
+    extra = 1
+    
+
+class UserAdmin(admin.ModelAdmin):
+    # list_display = ('id', "user", "image_profile",
+    #                 "url_tiktok", "url_instagram", "about_me", "is_public", "student_at")
+    list_display = ('username', 'first_name', 'last_name', 'email', )
+    list_filter = ('first_name', 'last_name', 'email', )
+    # I wanted to add LinkInline but it's not a foreign key
+    inlines = [UserProfileInline, ]
+
+
 class LinkAdmin(admin.ModelAdmin):
     list_display = ("link_type", "link_url")
     list_filter = ("link_type",)
     search_fields = ("link_url",)
 
+    
 class SchoolAdmin(admin.ModelAdmin):
     list_display = (
         'UAI_code',
@@ -56,8 +77,10 @@ class StudyProgramAdmin(admin.ModelAdmin):
     list_filter = ("discipline", "school")
     search_fields = ("name", "cod_aff_form", "description")
     
+    
 admin.site.register(Address, AddressAdmin)
 admin.site.register(Favorite, FavoriteAdmin)
 admin.site.register(Link, LinkAdmin)
 admin.site.register(School, SchoolAdmin)
 admin.site.register(StudyProgram, StudyProgramAdmin)
+admin.site.register(User, UserAdmin)
