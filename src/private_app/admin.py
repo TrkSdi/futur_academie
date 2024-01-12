@@ -2,7 +2,7 @@
 from django.contrib import admin
 
 # Local imports
-from .models import Address, Link, Favorite, School, StudyProgram, UserProfile
+from .models import Address, Link, Favorite, School, StudyProgram, UserProfile, User
 
 
 class AddressAdmin(admin.ModelAdmin):
@@ -14,11 +14,11 @@ class AddressAdmin(admin.ModelAdmin):
     )
     list_filter = ("locality",)
     search_fields = ("postcode", "locality")
-    
+
 
 class FavoriteAdmin(admin.ModelAdmin):
-    list_display = ("user","study_program","note","status")
-    list_filter =("study_program","status")
+    list_display = ("user", "study_program", "note", "status")
+    list_filter = ("study_program", "status")
     search_fields = ("note",)
     list_per_page = 10
 
@@ -31,7 +31,7 @@ class LinkInline(admin.TabularInline):
 class UserProfileInline(admin.TabularInline):
     model = UserProfile
     extra = 1
-    
+
 
 class UserAdmin(admin.ModelAdmin):
     # list_display = ('id', "user", "image_profile",
@@ -47,7 +47,7 @@ class LinkAdmin(admin.ModelAdmin):
     list_filter = ("link_type",)
     search_fields = ("link_url",)
 
-    
+
 class SchoolAdmin(admin.ModelAdmin):
     list_display = (
         'UAI_code',
@@ -76,8 +76,8 @@ class StudyProgramAdmin(admin.ModelAdmin):
     )
     list_filter = ("discipline", "school")
     search_fields = ("name", "cod_aff_form", "description")
-    
-    
+
+
 admin.site.register(Address, AddressAdmin)
 admin.site.register(Favorite, FavoriteAdmin)
 admin.site.register(Link, LinkAdmin)
