@@ -31,7 +31,8 @@ class UserAdmin(admin.ModelAdmin):
     #                 "url_tiktok", "url_instagram", "about_me", "is_public", "student_at")
     list_display = ('username', 'first_name', 'last_name', 'email', )
     list_filter = ('first_name', 'last_name', 'email', )
-    inlines = [UserProfileInline, LinkInline]
+    # I wanted to add LinkInline but it's not a foreign key
+    inlines = [UserProfileInline, ]
 
 
 admin.site.register(Address, AddressAdmin)
