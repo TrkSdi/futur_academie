@@ -13,11 +13,11 @@ class AddressAdmin(admin.ModelAdmin):
         "geolocation",
     )
     list_filter = ("locality",)
-    search_fields = ("postcode", "locality")
+    search_fields = ("postcode", "locality",)
 
 
 class FavoriteAdmin(admin.ModelAdmin):
-    list_display = ("user", "study_program", "note", "status")
+    list_display = ("user", "study_program", "note", "status",)
     list_filter = ("study_program", "status",)
     search_fields = ("note",)
     list_per_page = 10
