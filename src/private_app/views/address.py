@@ -5,7 +5,7 @@ from rest_framework import serializers, viewsets
 from private_app.models import Address
 
 
-class AddressSeralizer(serializers.ModelSerializer):
+class AddressSerializer(serializers.ModelSerializer):
     class Meta:
         model = Address
         fields = ["street_address", "postcode", "locality", "geolocation"]
@@ -13,4 +13,4 @@ class AddressSeralizer(serializers.ModelSerializer):
 
 class AddressViewSet(viewsets.ModelViewSet):
     queryset = Address.objects.all()
-    serializer_class = AddressSeralizer
+    serializer_class = AddressSerializer
