@@ -21,8 +21,23 @@ class FavoriteAdmin(admin.ModelAdmin):
     list_filter =("study_program","status")
     search_fields = ("note",)
     list_per_page = 10
-    
-    
+
+
+class SchoolAdmin(admin.ModelAdmin):
+    list_display = (
+        'UAI_code',
+        'name',
+        'school_url',
+        'description',
+        'address',
+        'school_type'
+    )
+    list_filter = (
+        'school_type'
+    )
+    search_fields = ('name', 'school_type')
     
 admin.site.register(Address, AddressAdmin)
 admin.site.register(Favorite, FavoriteAdmin)
+admin.site.register(School, SchoolAdmin)
+    
