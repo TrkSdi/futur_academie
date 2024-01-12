@@ -6,26 +6,31 @@ from .models import StudyProgram
 from .models import Address, Link, Favorite, School, StudyProgram, UserProfile, User
 
 
-class StudyProgramAdmin(admin.ModelAdmin):
+class AddressAdmin(admin.ModelAdmin):
     list_display = (
-        "cod_aff_form",
-        "name",
-        "school",
-        "discipline",
-        "acceptance_rate",
-        "L1_success_rate",
-        "insertion_rate",
-        "insertion_time_period"
+        "street_address",
+        "postcode",
+        "locality",
+        "geolocation",
     )
-    list_filter = ("discipline", "school")
-    search_fields = ("name", "cod_aff_form", "description")
     list_filter = ("locality",)
-    search_fields = ("postcode", "locality",)
+    search_fields = (
+        "postcode",
+        "locality",
+    )
 
 
 class FavoriteAdmin(admin.ModelAdmin):
-    list_display = ("user", "study_program", "note", "status",)
-    list_filter = ("study_program", "status",)
+    list_display = (
+        "user",
+        "study_program",
+        "note",
+        "status",
+    )
+    list_filter = (
+        "study_program",
+        "status",
+    )
     search_fields = ("note",)
     list_per_page = 10
 
@@ -43,10 +48,21 @@ class UserProfileInline(admin.TabularInline):
 class UserAdmin(admin.ModelAdmin):
     # list_display = ('id', "user", "image_profile",
     #                 "url_tiktok", "url_instagram", "about_me", "is_public", "student_at")
-    list_display = ('username', 'first_name', 'last_name', 'email', )
-    list_filter = ('first_name', 'last_name', 'email', )
+    list_display = (
+        "username",
+        "first_name",
+        "last_name",
+        "email",
+    )
+    list_filter = (
+        "first_name",
+        "last_name",
+        "email",
+    )
     # I wanted to add LinkInline but it's not a foreign key
-    inlines = [UserProfileInline, ]
+    inlines = [
+        UserProfileInline,
+    ]
 
 
 class LinkAdmin(admin.ModelAdmin):
@@ -57,17 +73,15 @@ class LinkAdmin(admin.ModelAdmin):
 
 class SchoolAdmin(admin.ModelAdmin):
     list_display = (
-        'UAI_code',
-        'name',
-        'school_url',
-        'description',
-        'address',
-        'school_type'
+        "UAI_code",
+        "name",
+        "school_url",
+        "description",
+        "address",
+        "school_type",
     )
-    list_filter = (
-        'school_type',
-    )
-    search_fields = ('name', 'school_type')
+    list_filter = ("school_type",)
+    search_fields = ("name", "school_type")
 
 
 class StudyProgramAdmin(admin.ModelAdmin):
@@ -79,7 +93,7 @@ class StudyProgramAdmin(admin.ModelAdmin):
         "acceptance_rate",
         "L1_success_rate",
         "insertion_rate",
-        "insertion_time_period"
+        "insertion_time_period",
     )
     list_filter = ("discipline", "school")
     search_fields = ("name", "cod_aff_form", "description")
