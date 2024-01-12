@@ -2,7 +2,7 @@
 from django.contrib import admin
 
 # Local imports
-from .models import Address, UserProfile
+from .models import Address, UserProfile, User
 
 
 class AddressAdmin(admin.ModelAdmin):
@@ -21,13 +21,18 @@ class LinkInline(admin.TabularInline):
     extra = 1
 
 
-class UserProfileAdmin(admin.ModelAdmin):
-    list_display = ('id', "user", "image_profile",
-                    "url_tiktok", "url_instagram", "about_me", "is_public", "student_at")
-    list_filter = ("user", "student_at", "is_public",)
-    search_fields = ("user", "student_at", "about_me")
-    inlines = [LinkInline]
+class UserProfileInline(admin.TabularInline):
+    model = UserProfile
+    extra = 1
+
+
+class UserAdmin(admin.ModelAdmin):
+    # list_display = ('id', "user", "image_profile",
+    #                 "url_tiktok", "url_instagram", "about_me", "is_public", "student_at")
+    list_display = ('username', 'first_name', 'last_name', 'email', )
+    list_filter = ('first_name', 'last_name', 'email', )
+    inlines = [UserProfileInline, Link, ]
 
 
 admin.site.register(Address, AddressAdmin)
-admin.site.register(UserProfile, UserProfileAdmin)
+admin.site.register(User, UserAdmin)
