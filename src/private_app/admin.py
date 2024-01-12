@@ -2,7 +2,7 @@
 from django.contrib import admin
 
 # Local imports
-from .models import Address
+from .models import Address,Favorite
 
 
 class AddressAdmin(admin.ModelAdmin):
@@ -14,9 +14,13 @@ class AddressAdmin(admin.ModelAdmin):
     )
     list_filter = ("locality",)
     search_fields = ("postcode", "locality")
+    
 
-
-admin.site.register(Address, AddressAdmin)
+class FavoriteAdmin(admin.ModelAdmin):
+    list_display = ("user","study_program","note","status")
+    list_filter =("study_program","status")
+    search_fields = ("note",)
+    list_per_page = 10
 
 
 class SchoolAdmin(admin.ModelAdmin):
@@ -32,4 +36,8 @@ class SchoolAdmin(admin.ModelAdmin):
         'school_type'
     )
     search_fields = ('name', 'school_type')
+    
+admin.site.register(Address, AddressAdmin)
+admin.site.register(Favorite, FavoriteAdmin)
+admin.site.register(School, SchoolAdmin)
     
