@@ -99,7 +99,6 @@ class StudyProgramAdmin(admin.ModelAdmin):
     search_fields = ("name", "cod_aff_form", "description")
 
 
-admin.site.register(StudyProgram, StudyProgramAdmin)
 admin.site.register(Address, AddressAdmin)
 admin.site.register(Favorite, FavoriteAdmin)
 admin.site.register(Link, LinkAdmin)
