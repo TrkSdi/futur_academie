@@ -2,16 +2,23 @@
 from django.contrib import admin
 
 # Local imports
+from .models import StudyProgram
 from .models import Address, Link, Favorite, School, StudyProgram, UserProfile, User
 
 
-class AddressAdmin(admin.ModelAdmin):
+class StudyProgramAdmin(admin.ModelAdmin):
     list_display = (
-        "street_address",
-        "postcode",
-        "locality",
-        "geolocation",
+        "cod_aff_form",
+        "name",
+        "school",
+        "discipline",
+        "acceptance_rate",
+        "L1_success_rate",
+        "insertion_rate",
+        "insertion_time_period"
     )
+    list_filter = ("discipline", "school")
+    search_fields = ("name", "cod_aff_form", "description")
     list_filter = ("locality",)
     search_fields = ("postcode", "locality",)
 
@@ -78,6 +85,7 @@ class StudyProgramAdmin(admin.ModelAdmin):
     search_fields = ("name", "cod_aff_form", "description")
 
 
+admin.site.register(StudyProgram, StudyProgramAdmin)
 admin.site.register(Address, AddressAdmin)
 admin.site.register(Favorite, FavoriteAdmin)
 admin.site.register(Link, LinkAdmin)
