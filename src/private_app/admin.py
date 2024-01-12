@@ -17,3 +17,19 @@ class AddressAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Address, AddressAdmin)
+
+
+class SchoolAdmin(admin.ModelAdmin):
+    list_display = (
+        'UAI_code',
+        'name',
+        'school_url',
+        'description',
+        'address',
+        'school_type'
+    )
+    list_filter = (
+        'school_type'
+    )
+    search_fields = ('name', 'school_type')
+    
