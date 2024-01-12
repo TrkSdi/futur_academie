@@ -49,12 +49,3 @@ class UserProfile(models.Model):
         null=True,
         help_text="FK to a program the student in which the student is or has enrolled.",
     )
-
-    # à revoir si intéressant
-    prefered_disciplines = models.ManyToManyField(
-        "Discipline",
-        related_name="profiles",
-        null=True,
-        blank=True,
-        help_text="Discipline choices of the student",
-    )

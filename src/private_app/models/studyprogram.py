@@ -20,14 +20,27 @@ class StudyProgram(models.Model):
         null=False,
         help_text="FK to the school which offers the program of study.",
     )
-    discipline = models.ForeignKey(
-        "Discipline",
-        on_delete=models.SET_NULL,
-        related_name="study_program",
-        null=True,
-        blank=True,
-        help_text="Discipline of the program",
+
+    DROIT = "Droit_Sc_Politiques"
+    ECO = "Economie_AES"
+    ARTS = "Arts_Lettres_Langues_SHS"
+    SCIENCES = "Sciences_Sante"
+    STAPS = "STAPS"
+    AUTRES = "Autres"
+    DISCIPLINE_TYPE = [
+        (DROIT, "Droit Sc. politiques"),
+        (ECO, "Économie, AES"),
+        (ARTS, "Arts, lettres, langues, SHS"),
+        (SCIENCES, "Sciences-santé"),
+        (STAPS, "STAPS"),
+        (AUTRES, "autres"),
+    ]
+    discipline = models.CharField(
+        max_length=130,
+        choices=DISCIPLINE_TYPE,
+        help_text="Choice of the general discipline to which a program belongs.",
     )
+
     # URL en onetoone
     url_parcoursup = models.OneToOneField(
         "Link",
