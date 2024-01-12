@@ -8,7 +8,8 @@ from private_app.models import StudyProgram
 class StudyProgramSerializer(serializers.ModelSerializer):
     class Meta:
         model = StudyProgram
-        fields = ["cod_aff_form", 
+        fields = ["cod_aff_form",
+                  "name",
                   "school", 
                   "discipline",
                   "url_parcoursup",
