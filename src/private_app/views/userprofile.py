@@ -12,9 +12,9 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class UserProfileSerializer(serializers.ModelSerializer):
+    user_extended = UserSerializer(source='users', read_only=False)
     class Meta:
         model = UserProfile
-        user_extended = UserSerializer(source='users', read_only=False)
         read_only_fields = ("id",)
         fields = ["id", "user_extended", "user", "image_profile",
                   "url_tiktok", "url_instagram", "about_me", "is_public", "student_at"]
