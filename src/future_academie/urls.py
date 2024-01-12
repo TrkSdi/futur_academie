@@ -5,4 +5,5 @@ urlpatterns = [
     # Honeypot fake admin login
     path("admin/", include("admin_honeypot.urls", namespace="admin_honeypot")),
     path("admin_future/", admin.site.urls),
+    path("API_private/", include("private_app.urls")),
 ]
