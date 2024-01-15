@@ -18,10 +18,10 @@ class FavoriteFilter(filters.FilterSet):
     class Meta:
         model = Favorite
         fields = {
-            "UAI_code": ["exact"],
-            "name": ["icontains", "exact"],
-            "description": ["icontains"],
-            "school_type": ["exact"],
+            "user": ["icontains"],
+            "study_program": ["exact"],
+            "note": ["icontains"],
+            "status": ["exact"],
         }
 
 class FavoriteViewSet(viewsets.ModelViewSet):
