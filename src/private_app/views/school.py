@@ -20,7 +20,13 @@ class SchoolSerializer(serializers.ModelSerializer):
 
 
 class SchoolFilter(filters.FilterSet):
-    # add possibility to filter by address
+    address__locality = filters.CharFilter(
+        field_name="address__locality", lookup_expr="icontains"
+    )
+    address__postcode = filters.CharFilter(
+        field_name="address__postcode", lookup_expr="contains"
+    )
+
     class Meta:
         model = School
         fields = {
