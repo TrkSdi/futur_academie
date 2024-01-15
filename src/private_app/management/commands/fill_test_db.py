@@ -29,15 +29,17 @@ class Command(BaseCommand):
         # Create 6 fake schools
         schools = []
         for i in range(1, 6):
+            # Make ~ half the schools public and half private
             if i % 2 == 0:
                 school_type = "private"
             else:
                 school_type = "public"
+            # Create the school object
             school = School.objects.create(
                 UAI_code="TEST000" + str(i),
                 name="Test School " + str(i),
                 school_url=Link.objects.create(
-                    link_type="Autres", link_url=f"http://www.test-school{i}.fr"
+                    link_type="SchoolWebsite", link_url=f"http://www.test-school{i}.fr"
                 ),
                 description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis luctus, diam quis venenatis laoreet,\
                     dolor nunc molestie quam, eget mattis mi dui eu nisi. Fusce lacinia metus nec sapien convallis, at tempor\
@@ -48,6 +50,7 @@ class Command(BaseCommand):
                 address=addresses[i - 1],
                 school_type=school_type,
             )
+            # Append the school to schools list for later use in this script
             schools.append(school)
         # Create fake programs
         programs = []
@@ -59,32 +62,36 @@ class Command(BaseCommand):
             ("STAPS", "STAPS"),
             ("Autres", "autres"),
         ]
+        # For each school, create one program for each type of discipline
         for i in range(0, len(schools)):
             j = 1
             for discipline_tuple in discpline_types:
                 code = random.randint(1000, 9998) + j
+                j += 1
+                # Create the study program
                 program = StudyProgram.objects.create(
                     cod_aff_form=code,
                     name=f"Test Program {discipline_tuple[1]} {i}",
                     school=schools[i],
                     discipline=discipline_tuple[0],
                     url_parcoursup=Link.objects.create(
-                        link_type="Autres", link_url=f"http://www.parcoursup.fr/{code}"
+                        link_type="ParcoursSuplink",
+                        link_url=f"http://www.parcoursup.fr/{code}",
                     ),
                     acceptance_rate=round(random.randint(60, 90) / 2.1, 2),
                     L1_success_rate=round(random.randint(60, 90) / 2.1, 2),
                     insertion_rate=round(random.randint(60, 90) / 2.1, 2),
                     insertion_time_period=round(random.randint(60, 90) / 2.1, 2),
-                    description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis luctus, diam quis venenatis laoreet,\
-                            dolor nunc molestie quam, eget mattis mi dui eu nisi. Fusce lacinia metus nec sapien convallis, at tempor\
-                                dui rutrum. Sed ac tincidunt sem, vitae malesuada mauris. Curabitur laoreet nulla aliquam tellus \
-                                    egestas accumsan. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis \
-                                        egestas. Sed vehicula vestibulum mi, sed euismod metus luctus sed. Integer sed orci at massa \
-                                            ullamcorper sagittis. Morbi et viverra arcu.",
+                    description="""Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis luctus, diam 
+                    quis venenatis laoreet, dolor nunc molestie quam, eget mattis mi dui eu nisi. Fusce lacinia 
+                    metus nec sapien convallis, at tempor dui rutrum. Sed ac tincidunt sem, vitae malesuada mauris. 
+                    Curabitur laoreet nulla aliquam tellus egestas accumsan. Pellentesque habitant morbi tristique 
+                    senectus et netus et malesuada fames ac turpis egestas. Sed vehicula vestibulum mi, sed euismod 
+                    metus luctus sed. Integer sed orci at massa ullamcorper sagittis. Morbi et viverra arcu.""",
                 )
-                j += 1
+                # Add the program to list of programs for later use in this script
                 programs.append(program)
-        # Create fake users
+        # Create 5 fake users
         users = []
         for i in range(1, 6):
             user = User.objects.create(
@@ -94,7 +101,9 @@ class Command(BaseCommand):
                 username=f"TestUser{i}",
             )
             users.append(user)
+        # For each user, create a profile
         for i in range(0, len(users)):
+            # Make ~ half the profiles public
             if i % 2 == 0:
                 public = True
             else:
@@ -108,27 +117,26 @@ class Command(BaseCommand):
                     link_type="Instagram",
                     link_url=f"http://www.instagram.com/TestUser{i}",
                 ),
-                about_me="Lorem ipsum dolor sit amet, consectetur adipiscing elit. \
-            Donec porttitor purus ligula, consequat feugiat leo ornare at. Vivamus \
-                lacinia dapibus vestibulum. Vestibulum laoreet lectus risus, et \
-                    mattis augue euismod a. Sed ac elit nisi. Phasellus iaculis \
-                        interdum justo sit amet venenatis. Mauris tristique lectus \
-                            vel rhoncus porttitor. Sed in nunc ante. Aliquam tempus \
-                                posuere lacus.",
+                about_me="""Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec porttitor purus ligula, 
+                consequat feugiat leo ornare at. Vivamus lacinia dapibus vestibulum. Vestibulum laoreet lectus risus, 
+                et mattis augue euismod a. Sed ac elit nisi. Phasellus iaculis interdum justo sit amet venenatis. 
+                Mauris tristique lectus vel rhoncus porttitor. Sed in nunc ante. Aliquam tempus posuere lacus.""",
                 is_public=public,
             )
-        # Create fake favorites
+        # Create 3 fake favorites for each user
         for user in users:
             i = 0
             while i < 3:
+                # choose a program at random
                 program_number = random.randint(0, len(programs) - 1)
                 program = programs[program_number]
+                # Add a note to ~ half of the favorites
                 if random.randint(0, 10) < 6:
-                    note = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. \
-                        Donec porttitor purus ligula, consequat feugiat leo ornare at. Vivamus \
-                        lacinia dapibus vestibulum."
+                    note = """Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec porttitor purus ligula, 
+                    consequat feugiat leo ornare at. Vivamus lacinia dapibus vestibulum."""
                 else:
                     note = None
+                # Create the favorite
                 Favorite.objects.create(
                     user=user,
                     study_program=program,
