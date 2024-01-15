@@ -10,6 +10,5 @@ router.register(r"studyprogram", views.StudyProgramViewSet, basename="studyprogr
 router.register(r"school", views.SchoolViewSet, basename="school")
 router.register(r"userprofile", views.UserProfileViewSet, basename="userprofile")
 router.register(r"favorite", views.FavoriteViewSet, basename="favorite")
-router.register(r"createuser", views.FavoriteViewSet, basename="favorite")
 
 urlpatterns = [path("", include(router.urls))]
