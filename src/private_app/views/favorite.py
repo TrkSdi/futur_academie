@@ -14,7 +14,6 @@ class FavoriteSerializer(serializers.ModelSerializer):
         fields = ["id", "user", "study_program", "note", "status"]
 
 class FavoriteFilter(filters.FilterSet):
-    # add possibility to filter by address
     class Meta:
         model = Favorite
         fields = {
