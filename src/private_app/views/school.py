@@ -4,29 +4,29 @@ from rest_framework import serializers, viewsets
 
 # Local imports
 from private_app.models import School
+from .address import AddressSerializer
+from .link import LinkSerializer
 
 
 class SchoolSerializer(serializers.ModelSerializer):
+    address_extended = AddressSerializer(source="address")
+    school_url_extended = LinkSerializer(source="school_url")
+
     class Meta:
         model = School
         fields = [
             "UAI_code",
             "name",
             "school_url",
+            "school_url_extended",
             "description",
             "address",
+            "address_extended",
             "school_type",
         ]
 
 
 class SchoolFilter(filters.FilterSet):
-    address__locality = filters.CharFilter(
-        field_name="address__locality", lookup_expr="icontains"
-    )
-    address__postcode = filters.CharFilter(
-        field_name="address__postcode", lookup_expr="contains"
-    )
-
     class Meta:
         model = School
         fields = {
@@ -34,6 +34,8 @@ class SchoolFilter(filters.FilterSet):
             "name": ["icontains", "exact"],
             "description": ["icontains"],
             "school_type": ["exact"],
+            "address__postcode": ["icontains"],
+            "address__locality": ["icontains"],
         }
 
 
