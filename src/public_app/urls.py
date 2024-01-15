@@ -5,7 +5,23 @@ from rest_framework import routers
 # Local imports
 from . import views
 
-router = routers.DefaultRouter()
+
+# Rename default router info
+class PublicAPI(routers.APIRootView):
+    """
+    Public access to school program information and profiles which allow
+    public access.
+    """
+
+    pass
+
+
+class DocumentedPublicRouter(routers.DefaultRouter):
+    APIRootView = PublicAPI
+
+
+router = DocumentedPublicRouter()
+
 router.register(
     r"studyprogram", views.StudyProgramViewSetPublic, basename="studyprogram"
 )

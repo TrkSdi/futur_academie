@@ -6,13 +6,14 @@ from django_filters import rest_framework as filters
 # Local imports
 from private_app.models import UserProfile, User
 from .favorite import FavoriteSerializerPublic
-from rest_framework import permissions
+from .link import LinkSerializerPublic
 
 
 class UserSerializerPublic(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ["username", "first_name", "last_name", "email"]
+        fields = ["first_name", "last_name"]
+        read_only_fields = ["first_name", "last_name"]
 
 
 class UserProfileFilterPublic(filters.FilterSet):
@@ -30,29 +31,33 @@ class UserProfileFilterPublic(filters.FilterSet):
 class UserProfileSerializerPublic(serializers.ModelSerializer):
     user_extended = UserSerializerPublic(source="user", read_only=False)
     favorites_extended = FavoriteSerializerPublic(source="user.favorites", many=True)
+    url_tiktok_extended = LinkSerializerPublic(source="url_tiktok")
+    url_instagram_extended = LinkSerializerPublic(source="url_instagram")
 
     class Meta:
         model = UserProfile
         read_only_fields = [
             "user_extended",
-            "user",
             "image_profile",
             "url_tiktok",
             "url_instagram",
             "about_me",
             "student_at",
             "favorites_extended",
+            "url_tiktok_extended",
+            "url_instagram_extended",
         ]
 
         fields = [
             "user_extended",
-            "user",
             "image_profile",
             "url_tiktok",
             "url_instagram",
             "about_me",
             "student_at",
             "favorites_extended",
+            "url_tiktok_extended",
+            "url_instagram_extended",
         ]
 
 

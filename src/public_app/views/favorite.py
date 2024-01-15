@@ -11,12 +11,10 @@ class FavoriteSerializerPublic(serializers.ModelSerializer):
     class Meta:
         model = Favorite
         fields = [
-            "user",
             "study_program",
             "status",
         ]
         read_only_fields = [
-            "user",
             "study_program",
             "status",
         ]
