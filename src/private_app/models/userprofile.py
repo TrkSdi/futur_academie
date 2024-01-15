@@ -25,18 +25,18 @@ class UserProfile(models.Model):
         "Link",
         related_name="profile_tiktok",
         on_delete=models.CASCADE,
-        help_text="A url to the user's TikTok profile.",
+        help_text="A url to the user's TikTok profile.", null=True, blank=True,
     )
 
     url_instagram = models.OneToOneField(
         "Link",
         related_name="profile_insta",
         on_delete=models.CASCADE,
-        help_text="A url to the user's Instagram profile.",
+        help_text="A url to the user's Instagram profile.", null=True, blank=True,
     )
 
     about_me = models.TextField(
-        max_length=400, help_text="A profile description of the user."
+        max_length=400, help_text="A profile description of the user.",  null=True, blank=True,
     )
     is_public = models.BooleanField(
         default=False,
@@ -46,6 +46,6 @@ class UserProfile(models.Model):
         "StudyProgram",
         on_delete=models.SET_NULL,
         related_name="students",
-        null=True,
+        null=True, blank=True,
         help_text="FK to a program the student in which the student is or has enrolled.",
     )
