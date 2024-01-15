@@ -5,7 +5,7 @@ from rest_framework import serializers, viewsets
 from private_app.models import Favorite
 
 
-class FavoriteSeralizer(serializers.ModelSerializer):
+class FavoriteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Favorite
         fields = ["id", "user", "study_program", "note", "status"]
@@ -13,4 +13,4 @@ class FavoriteSeralizer(serializers.ModelSerializer):
 
 class FavoriteViewSet(viewsets.ModelViewSet):
     queryset = Favorite.objects.all()
-    serializer_class = FavoriteSeralizer
+    serializer_class = FavoriteSerializer
