@@ -32,5 +32,4 @@ class FavoriteViewSet(viewsets.ModelViewSet):
     filter_backends = [
         filters.DjangoFilterBackend,
     ]
-    
 
