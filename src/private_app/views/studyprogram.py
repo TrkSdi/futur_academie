@@ -33,7 +33,7 @@ class StudyProgramFilter(filters.FilterSet):
             "discipline": ["exact"],
             "url_parcoursup": ["exact"],
             "acceptance_rate": ["exact", "gt", "lt"],
-            "l1_succes_rate": ["exact", "gt", "lt"],
+            "L1_success_rate": ["exact", "gt", "lt"],
             "insertion_rate": ["exact", "gt", "lt"],
             "insertion_time_period": ["icontains"],
             "description": ["icontains"],
