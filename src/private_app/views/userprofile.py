@@ -8,16 +8,26 @@ from private_app.models import UserProfile, User
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['username', 'first_name', 'last_name', 'email']
+        fields = ["username", "first_name", "last_name", "email"]
 
 
 class UserProfileSerializer(serializers.ModelSerializer):
-    user_extended = UserSerializer(source='users', read_only=False)
+    user_extended = UserSerializer(source="user", read_only=False)
+
     class Meta:
         model = UserProfile
         read_only_fields = ("id",)
-        fields = ["id", "user_extended", "user", "image_profile",
-                  "url_tiktok", "url_instagram", "about_me", "is_public", "student_at"]
+        fields = [
+            "id",
+            "user_extended",
+            "user",
+            "image_profile",
+            "url_tiktok",
+            "url_instagram",
+            "about_me",
+            "is_public",
+            "student_at",
+        ]
 
 
 class UserProfileViewSet(viewsets.ModelViewSet):
