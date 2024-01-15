@@ -5,13 +5,12 @@ from django_filters import rest_framework as filters
 # Local imports
 from private_app.models import Favorite
 
-
 class FavoriteSerializer(serializers.ModelSerializer):
+    user_extended = UserSerializer(source="user")
     class Meta:
         model = Favorite
         read_only_fields = ("id",)
-
-        fields = ["id", "user", "study_program", "note", "status"]
+        fields = ["id", "user", "study_program", "note", "status","user_extended"]
 
 class FavoriteFilter(filters.FilterSet):
     class Meta:
@@ -32,5 +31,4 @@ class FavoriteViewSet(viewsets.ModelViewSet):
     filter_backends = [
         filters.DjangoFilterBackend,
     ]
-    
 
