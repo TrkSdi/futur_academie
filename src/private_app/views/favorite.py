@@ -12,7 +12,7 @@ class FavoriteSerializer(serializers.ModelSerializer):
         model = Favorite
         read_only_fields = ("id",)
         fields = ["id", "user", "study_program",
-                  "note", "status", "user_extended"]
+                  "note", "status",]
 
 
 class FavoriteFilter(filters.FilterSet):
