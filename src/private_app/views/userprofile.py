@@ -2,7 +2,7 @@
 from rest_framework import serializers, viewsets
 
 # Local imports
-from private_app.models import Favorite, UserProfile, User
+from private_app.models import UserProfile, User
 from .favorite import FavoriteSerializer
 
 
