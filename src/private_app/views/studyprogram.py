@@ -1,4 +1,5 @@
 # Third-party imports
+from django_filters import rest_framework as filters
 from rest_framework import serializers, viewsets
 
 # Local imports
@@ -21,6 +22,28 @@ class StudyProgramSerializer(serializers.ModelSerializer):
                   ]
 
 
+class StudyProgramFilter(filters.FilterSet):
+    
+    class Meta:
+        model = StudyProgram
+        fields = {
+            "cod_aff_form": ["exact"],
+            "name": ["icontains", "exact"],
+            "school": ["exact"],
+            "discipline": ["exact"],
+            "url_parcoursup": ["exact"],
+            "acceptance_rate": ["exact", "gt", "lt"],
+            "l1_succes_rate": ["exact", "gt", "lt"],
+            "insertion_rate": ["exact", "gt", "lt"],
+            "insertion_time_period": ["icontains"],
+            "description": ["icontains"],
+            
+        }
+
 class StudyProgramViewSet(viewsets.ModelViewSet):
     queryset = StudyProgram.objects.all()
     serializer_class = StudyProgramSerializer
+    filterset_class = StudyProgramFilter
+    filter_backends = [
+        filters.DjangoFilterBackend,
+    ]
