@@ -16,18 +16,15 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class UserProfileFilter(filters.FilterSet):
-    # user_first_name = filters.CharFilter(
-    #     field_name="first_name", lookup_expr="icontains"
-    # )
-
     class Meta:
         model = UserProfile
-        fields = {"user__first_name": ["icontains"],
-                  "user__last_name": ["icontains", "exact"],
-                  "about_me": ["icontains"],
-                  "student_at__name": ["icontains"],
-                  "student_at__cod_aff_form": ["exact"]
-                  }
+        fields = {
+            "user__first_name": ["icontains"],
+            "user__last_name": ["icontains", "exact"],
+            "about_me": ["icontains"],
+            "student_at__name": ["icontains"],
+            "student_at__cod_aff_form": ["exact"],
+        }
 
 
 class UserProfileSerializer(serializers.ModelSerializer):
@@ -57,3 +54,11 @@ class UserProfileViewSet(viewsets.ModelViewSet):
     filterset_class = UserProfileFilter
     filter_backends = (filters.DjangoFilterBackend,)
     permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self, *args, **kwargs):
+        """Return the queryset with only favorites owned by the user requesting them"""
+        if self.request.user.is_superuser:
+            queryset = UserProfile.objects.all()
+        else:
+            queryset = UserProfile.objects.all().filter(user=self.request.user)
+        return queryset

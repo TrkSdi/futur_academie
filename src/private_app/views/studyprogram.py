@@ -10,21 +10,21 @@ from private_app.models import StudyProgram
 class StudyProgramSerializer(serializers.ModelSerializer):
     class Meta:
         model = StudyProgram
-        fields = ["cod_aff_form",
-                  "name",
-                  "school",
-                  "discipline",
-                  "url_parcoursup",
-                  "acceptance_rate",
-                  "L1_success_rate",
-                  "insertion_rate",
-                  "insertion_time_period",
-                  "description",
-                  ]
+        fields = [
+            "cod_aff_form",
+            "name",
+            "school",
+            "discipline",
+            "url_parcoursup",
+            "acceptance_rate",
+            "L1_success_rate",
+            "insertion_rate",
+            "insertion_time_period",
+            "description",
+        ]
 
 
 class StudyProgramFilter(filters.FilterSet):
-
     class Meta:
         model = StudyProgram
         fields = {
@@ -38,7 +38,6 @@ class StudyProgramFilter(filters.FilterSet):
             "insertion_rate": ["exact", "gt", "lt"],
             "insertion_time_period": ["icontains"],
             "description": ["icontains"],
-
         }
 
 
@@ -49,4 +48,4 @@ class StudyProgramViewSet(viewsets.ModelViewSet):
     filter_backends = [
         filters.DjangoFilterBackend,
     ]
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [permissions.IsAdminUser]

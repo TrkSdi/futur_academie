@@ -28,4 +28,4 @@ class AddressViewSet(viewsets.ModelViewSet):
     serializer_class = AddressSerializer
     filterset_class = AddressFilter
     filter_backends = (filters.DjangoFilterBackend,)
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAdminUser]

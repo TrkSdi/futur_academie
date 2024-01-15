@@ -47,4 +47,4 @@ class SchoolViewSet(viewsets.ModelViewSet):
     filter_backends = [
         filters.DjangoFilterBackend,
     ]
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [permissions.IsAdminUser]
