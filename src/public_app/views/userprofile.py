@@ -1,6 +1,7 @@
 # Third-party imports
 from rest_framework import serializers, viewsets
 from django_filters import rest_framework as filters
+from rest_framework import permissions
 
 
 # Local imports
@@ -30,7 +31,8 @@ class UserProfileFilterPublic(filters.FilterSet):
 
 class UserProfileSerializerPublic(serializers.ModelSerializer):
     user_extended = UserSerializerPublic(source="user", read_only=False)
-    favorites_extended = FavoriteSerializerPublic(source="user.favorites", many=True)
+    favorites_extended = FavoriteSerializerPublic(
+        source="user.favorites", many=True)
     url_tiktok_extended = LinkSerializerPublic(source="url_tiktok")
     url_instagram_extended = LinkSerializerPublic(source="url_instagram")
 
@@ -66,3 +68,4 @@ class UserProfileViewSetPublic(viewsets.ReadOnlyModelViewSet):
     serializer_class = UserProfileSerializerPublic
     filterset_class = UserProfileFilterPublic
     filter_backends = (filters.DjangoFilterBackend,)
+    permission_classes = [permissions.AllowAny]

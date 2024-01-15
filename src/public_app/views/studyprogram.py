@@ -65,3 +65,4 @@ class StudyProgramViewSetPublic(viewsets.ReadOnlyModelViewSet):
     filter_backends = [
         filters.DjangoFilterBackend,
     ]
+    permission_classes = [permissions.AllowAny]
