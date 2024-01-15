@@ -6,13 +6,10 @@ from rest_framework import routers
 from . import views
 
 router = routers.DefaultRouter()
-router.register(r"studyprogram", views.StudyProgramViewSet,
-                basename="studyprogram")
+router.register(r"studyprogram", views.StudyProgramViewSet, basename="studyprogram")
 router.register(r"school", views.SchoolViewSet, basename="school")
-router.register(r"userprofile", views.UserProfileViewSet,
-                basename="userprofile")
+router.register(r"userprofile", views.UserProfileViewSet, basename="userprofile")
 router.register(r"favorite", views.FavoriteViewSet, basename="favorite")
 router.register(r"createuser", views.FavoriteViewSet, basename="favorite")
-router.register(r"links", views.LinkViewSet, basename="links")
 
 urlpatterns = [path("", include(router.urls))]

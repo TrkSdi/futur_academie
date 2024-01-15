@@ -3,6 +3,6 @@ from .userprofile import UserProfileSerializer, UserSerializer, UserProfileViewS
 from .address import AddressSerializer, AddressViewSet
 
 from .favorite import FavoriteSerializer, FavoriteViewSet
-from .link import LinkSerializer, LinkViewSet
+from .link import LinkSerializer
 from .school import SchoolSerializer, SchoolViewSet
 from .studyprogram import StudyProgramSerializer, StudyProgramViewSet
