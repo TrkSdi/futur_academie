@@ -30,3 +30,6 @@ class LinkFilter(filters.FilterSet):
 class LinkViewSet(viewsets.ModelViewSet):
     queryset = Link.objects.all()
     serializer_class = LinkSerializer
+    filterset_class = LinkFilter
+    filter_backends = [
+        filters.DjangoFilterBackend,]
