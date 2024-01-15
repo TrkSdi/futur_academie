@@ -28,13 +28,14 @@ class Favorite(models.Model):
         help_text="A private note written by the user about the program.",
         null=True,
     )
-
+    INTERESTED = "interested"
     APPLIED = "applied"
     ACCEPTED = "accepted"
     WAITLISTED = "waitlisted"
     ENROLLED = "enrolled"
 
     STATUS_CHOICES = [
+        (INTERESTED, "interested"),
         (APPLIED, "applied"),
         (ACCEPTED, "accepted"),
         (WAITLISTED, "waitlisted"),
