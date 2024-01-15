@@ -6,10 +6,9 @@ class Link(models.Model):
 
     SOCIAL_TYPE = [
         ("Website", "Website"),
-        ("Facebook", "Facebook"),
-        ("Twitter", "Twitter"),
+        ("Tiktok", "Tiktok"),
         ("Instagram", "Instagram"),
-        ("Autres", "Autres"),
+        ("Other", "Other"),
     ]  # every social media
     link_type = models.CharField(
         max_length=30,
