@@ -17,7 +17,9 @@ class FavoriteFilter(filters.FilterSet):
     class Meta:
         model = Favorite
         fields = {
-            "user": ["icontains"],
+            "user__username": ["icontains"],
+            "user__first_name": ["icontains"],
+            "user__last_name": ["icontains"],
             "study_program": ["exact"],
             "note": ["icontains"],
             "status": ["exact"],
