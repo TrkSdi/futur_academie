@@ -1,6 +1,7 @@
 # Third-party imports
 from django_filters import rest_framework as filters
 from rest_framework import serializers, viewsets
+from rest_framework import permissions
 
 # Local imports
 from private_app.models import School
@@ -46,3 +47,4 @@ class SchoolViewSet(viewsets.ModelViewSet):
     filter_backends = [
         filters.DjangoFilterBackend,
     ]
+    permission_classes = [permissions.IsAdminUser]
