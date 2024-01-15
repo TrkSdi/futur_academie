@@ -29,3 +29,4 @@ class AddressViewSetPublic(viewsets.ReadOnlyModelViewSet):
     serializer_class = AddressSerializerPublic
     filterset_class = AddressFilterPublic
     filter_backends = (filters.DjangoFilterBackend,)
+    permission_classes = [permissions.AllowAny]
