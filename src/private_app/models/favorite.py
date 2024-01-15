@@ -15,13 +15,14 @@ class Favorite(models.Model):
         null=False,
         help_text="FK to the user who created the favorite.",
     )
-    study_program = models.OneToOneField(
+    study_program = models.ForeignKey(
         "StudyProgram",
         related_name="favorite",
         on_delete=models.CASCADE,
         null=False,
         help_text="The program saved as a favorite by the user.",
     )
+
     note = models.CharField(
         max_length=300,
         help_text="A private note written by the user about the program.",
