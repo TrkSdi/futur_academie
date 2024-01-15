@@ -6,6 +6,9 @@ class Link(models.Model):
 
     SOCIAL_TYPE = [
         ("Website", "Website"),
+        ("ParcoursSuplink", "ParcoursSup link"),
+        ("SchoolWebsite", "Scholl Website")
+
         ("Tiktok", "Tiktok"),
         ("Instagram", "Instagram"),
         ("Other", "Other"),
