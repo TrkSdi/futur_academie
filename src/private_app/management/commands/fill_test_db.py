@@ -17,6 +17,7 @@ class Command(BaseCommand):
 
     @transaction.atomic
     def handle(self, *args, **options):
+        # Create 6 fake addresses
         addresses = []
         for i in range(1, 6):
             address = Address.objects.create(
@@ -25,6 +26,7 @@ class Command(BaseCommand):
                 locality="Testville",
             )
             addresses.append(address)
+        # Create 6 fake schools
         schools = []
         for i in range(1, 6):
             if i % 2 == 0:
@@ -47,6 +49,7 @@ class Command(BaseCommand):
                 school_type=school_type,
             )
             schools.append(school)
+        # Create fake programs
         programs = []
         discpline_types = [
             ("Droit_Sc_Politiques", "Droit Sc. politiques"),
@@ -60,7 +63,7 @@ class Command(BaseCommand):
             j = 1
             for discipline_tuple in discpline_types:
                 code = random.randint(1000, 9998) + j
-                program = StudyProgram(
+                program = StudyProgram.objects.create(
                     cod_aff_form=code,
                     name=f"Test Program {discipline_tuple[1]} {i}",
                     school=schools[i],
@@ -81,6 +84,7 @@ class Command(BaseCommand):
                 )
                 j += 1
                 programs.append(program)
+        # Create fake users
         users = []
         for i in range(1, 6):
             user = User.objects.create(
@@ -113,10 +117,12 @@ class Command(BaseCommand):
                                 posuere lacus.",
                 is_public=public,
             )
+        # Create fake favorites
         for user in users:
             i = 0
             while i < 3:
-                program_number = random.randint(2, len(programs))
+                program_number = random.randint(0, len(programs) - 1)
+                program = programs[program_number]
                 if random.randint(0, 10) < 6:
                     note = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. \
                         Donec porttitor purus ligula, consequat feugiat leo ornare at. Vivamus \
@@ -125,7 +131,7 @@ class Command(BaseCommand):
                     note = None
                 Favorite.objects.create(
                     user=user,
-                    study_program=programs[program_number - 1],
+                    study_program=program,
                     note=note,
                     status="applied",
                 )
