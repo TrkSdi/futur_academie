@@ -1,5 +1,6 @@
 # Third-party imports
 from rest_framework import serializers, viewsets
+from django_filters import rest_framework as filters
 
 # Local imports
 from private_app.models import Link
@@ -12,6 +13,18 @@ class LinkSerializer(serializers.ModelSerializer):
             "link_type",
             "link_url",
         ]
+
+
+class LinkFilter(filters.FilterSet):
+
+    class Meta:
+        # add possibility to filter by link type and link Url
+        model = Link
+        fields = {
+            "link_type": ["icontains", "exact"],
+            "link_url": ["icontains", "exact"],
+
+        }
 
 
 class LinkViewSet(viewsets.ModelViewSet):
