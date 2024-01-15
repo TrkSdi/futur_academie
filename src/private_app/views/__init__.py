@@ -1,5 +1,5 @@
 from .address import AddressSerializer, AddressViewSet
-from .favorite import FavoriteSeralizer, FavoriteViewSet
+from .favorite import FavoriteSerializer, FavoriteViewSet
 from .link import LinkSerializer, LinkViewSet
 from .school import SchoolSerializer, SchoolViewSet
 from .studyprogram import StudyProgramSerializer, StudyProgramViewSet

@@ -8,6 +8,8 @@ from private_app.models import Favorite
 class FavoriteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Favorite
+        read_only_fields = ("id",)
+
         fields = ["id", "user", "study_program", "note", "status"]
 
 
