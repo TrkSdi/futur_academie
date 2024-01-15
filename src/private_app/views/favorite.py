@@ -1,6 +1,7 @@
 # Third-party imports
 from rest_framework import serializers, viewsets
 from django_filters import rest_framework as filters
+from rest_framework import permissions
 
 # Local imports
 from private_app.models import Favorite
@@ -35,3 +36,4 @@ class FavoriteViewSet(viewsets.ModelViewSet):
     filter_backends = [
         filters.DjangoFilterBackend,
     ]
+    permission_classes = [permissions.IsAuthenticated]

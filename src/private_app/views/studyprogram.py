@@ -1,6 +1,7 @@
 # Third-party imports
 from django_filters import rest_framework as filters
 from rest_framework import serializers, viewsets
+from rest_framework import permissions
 
 # Local imports
 from private_app.models import StudyProgram
@@ -11,7 +12,7 @@ class StudyProgramSerializer(serializers.ModelSerializer):
         model = StudyProgram
         fields = ["cod_aff_form",
                   "name",
-                  "school", 
+                  "school",
                   "discipline",
                   "url_parcoursup",
                   "acceptance_rate",
@@ -23,7 +24,7 @@ class StudyProgramSerializer(serializers.ModelSerializer):
 
 
 class StudyProgramFilter(filters.FilterSet):
-    
+
     class Meta:
         model = StudyProgram
         fields = {
@@ -37,8 +38,9 @@ class StudyProgramFilter(filters.FilterSet):
             "insertion_rate": ["exact", "gt", "lt"],
             "insertion_time_period": ["icontains"],
             "description": ["icontains"],
-            
+
         }
+
 
 class StudyProgramViewSet(viewsets.ModelViewSet):
     queryset = StudyProgram.objects.all()
@@ -47,3 +49,4 @@ class StudyProgramViewSet(viewsets.ModelViewSet):
     filter_backends = [
         filters.DjangoFilterBackend,
     ]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]

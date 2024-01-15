@@ -6,6 +6,7 @@ from django_filters import rest_framework as filters
 # Local imports
 from private_app.models import UserProfile, User
 from .favorite import FavoriteSerializer
+from rest_framework import permissions
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -55,3 +56,4 @@ class UserProfileViewSet(viewsets.ModelViewSet):
     serializer_class = UserProfileSerializer
     filterset_class = UserProfileFilter
     filter_backends = (filters.DjangoFilterBackend,)
+    permission_classes = [permissions.IsAuthenticated]
