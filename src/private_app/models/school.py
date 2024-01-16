@@ -10,7 +10,6 @@ class School(models.Model):
         max_length=100, help_text="The name of the school or university."
     )
 
-    # oneto one
     school_url = models.OneToOneField(
         "Link",
         related_name="school",
@@ -35,3 +34,6 @@ class School(models.Model):
     school_type = models.CharField(
         choices=SCHOOL_TYPES, help_text="Type of school, public or private."
     )
+
+    def __str__(self) -> str:
+        return f"{self.name}"
