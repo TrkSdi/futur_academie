@@ -17,6 +17,12 @@ class Command(BaseCommand):
 
     @transaction.atomic
     def handle(self, *args, **options):
+        # Create a superuser who can login to the admin panel
+        # admin_user = User.objects.create(username="admin", password="admin")
+        # admin_user.is_staff = True
+        # admin_user.is_superuser = True
+        # admin_user.save()
+
         # Create 6 fake addresses
         addresses = []
         for i in range(1, 6):
