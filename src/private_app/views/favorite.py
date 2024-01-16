@@ -36,7 +36,6 @@ class FavoriteFilter(filters.FilterSet):
 
 
 class FavoriteViewSet(viewsets.ModelViewSet):
-    queryset = Favorite.objects.all()
     serializer_class = FavoriteSerializer
     filterset_class = FavoriteFilter
     filter_backends = [
