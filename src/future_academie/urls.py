@@ -1,5 +1,5 @@
 from django.contrib import admin
-from django.urls import include, path
+from django.urls import include, path, re_path
 
 urlpatterns = [
     # Honeypot fake admin login
@@ -7,4 +7,6 @@ urlpatterns = [
     path("admin_future/", admin.site.urls),
     path("API_private/", include("private_app.urls")),
     path("API_public/", include("public_app.urls")),
+    re_path(r'^auth/', include('djoser.urls')),
+    re_path(r'^auth/', include('djoser.urls.jwt')),
 ]
