@@ -10,10 +10,9 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
-from pathlib import Path
-import os
-import platform
 import environ
+import os
+from pathlib import Path
 from django.utils.timezone import timedelta
 
 
@@ -71,7 +70,7 @@ REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework.permissions.IsAuthenticated",
     ],
-    "DEFAULT_PAGINATION_CLASS": 'private_app.paginaton.MyPagination"',
+    "DEFAULT_PAGINATION_CLASS": "private_app.pagination.MyPagination",
 }
 SIMPLE_JWT = {
     "AUTH_HEADER_TYPES": ("JWT",),
