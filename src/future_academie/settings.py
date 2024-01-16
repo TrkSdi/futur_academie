@@ -57,6 +57,8 @@ INSTALLED_APPS = [
     "django_filters",
     "rest_framework",
     "rest_framework.authtoken",
+    'rest_framework_simplejwt.token_blacklist',
+
     # Local apps
     "private_app",
     "public_app",
@@ -178,11 +180,11 @@ AUTHENTICATION_BACKENDS = [
     # Django ModelBackend is the default authentication backend.
     "django.contrib.auth.backends.ModelBackend",
 ]
+
+#SMTP CONFIGURATION
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = env.str("EMAIL_HOST")
-# The port provided by ProtonMail Bridge
 EMAIL_PORT = env.int("EMAIL_PORT")
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = env.str("EMAIL_HOST_USER")
-# Password from ProtonMail Bridge
 EMAIL_HOST_PASSWORD = env.str("EMAIL_HOST_PASSWORD")
