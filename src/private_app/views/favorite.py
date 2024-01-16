@@ -7,7 +7,6 @@ from django.db.models import Q
 # Local imports
 from private_app.models import Favorite
 
-
 class FavoriteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Favorite
