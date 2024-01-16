@@ -82,7 +82,7 @@ DJOSER = {
     "USER_ID_FIELD": "username",
     "LOGIN_FIELD": "email",
     "SEND_ACTIVATION_EMAIL": True,
-    "ACTIVATIONURL": "activate/{uid}/{token}", }
+    "ACTIVATION_URL": "activate/{uid}/{token}", }
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
