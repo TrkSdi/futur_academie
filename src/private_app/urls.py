@@ -22,9 +22,12 @@ class DocumentedPrivateRouter(routers.DefaultRouter):
 
 router = DocumentedPrivateRouter()
 
-router.register(r"studyprogram", views.StudyProgramViewSet, basename="studyprogram")
+router.register(r"studyprogram", views.StudyProgramViewSet,
+                basename="studyprogram")
 router.register(r"school", views.SchoolViewSet, basename="school")
-router.register(r"userprofile", views.UserProfileViewSet, basename="userprofile")
+router.register(r"userprofile", views.UserProfileViewSet,
+                basename="userprofile")
 router.register(r"favorite", views.FavoriteViewSet, basename="favorite")
 
-urlpatterns = [path("", include(router.urls))]
+urlpatterns = [path("", include(router.urls))
+               ]

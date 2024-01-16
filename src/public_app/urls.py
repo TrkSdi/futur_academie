@@ -1,7 +1,6 @@
 # Third-party imports
-from django.urls import include, path, re_path
+from django.urls import include, path
 from rest_framework import routers
-import djoser
 # Local imports
 from . import views
 
@@ -31,7 +30,4 @@ router.register(r"userprofile", views.UserProfileViewSetPublic,
 router.register(r"favorite", views.FavoriteViewSetPublic, basename="favorite")
 
 urlpatterns = [path("", include(router.urls)),
-               re_path(r'^auth/', include('djoser.urls')),
-
-               re_path(r'^auth/', include('djoser.urls.jwt')),
                ]
