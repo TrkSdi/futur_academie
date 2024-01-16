@@ -88,7 +88,6 @@ DJOSER = {
         'token': 'djoser.serializers.TokenSerializer',
         'current_user': 'djoser.serializers.UserSerializer',
     },
-    'TOKEN_MODEL': 'rest_framework_simplejwt.tokens.RefreshToken',
 
 }
 MIDDLEWARE = [
