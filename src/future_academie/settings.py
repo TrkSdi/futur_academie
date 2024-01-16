@@ -14,6 +14,7 @@ from pathlib import Path
 import os
 import platform
 import environ
+from django.utils.timezone import timedelta
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -51,6 +52,8 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # Third-party installed apps
     "django.contrib.gis",
+    'djoser',
+
     "axes",
     "admin_honeypot",
     "django_filters",
@@ -70,6 +73,10 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
     ],
+}
+SIMPLE_JWT = {
+    'AUTH_HEADER_TYPES': ('JWT',),
+    'ACCESS_TOKEN_LIFETIME': timedelta(hours=3)
 }
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
