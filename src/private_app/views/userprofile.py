@@ -49,7 +49,6 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
 
 class UserProfileViewSet(viewsets.ModelViewSet):
-    queryset = UserProfile.objects.all()
     serializer_class = UserProfileSerializer
     filterset_class = UserProfileFilter
     filter_backends = (filters.DjangoFilterBackend,)
