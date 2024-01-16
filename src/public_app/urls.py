@@ -1,7 +1,7 @@
 # Third-party imports
 from django.urls import include, path, re_path
 from rest_framework import routers
-
+import djoser
 # Local imports
 from . import views
 
