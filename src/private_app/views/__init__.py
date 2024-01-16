@@ -7,3 +7,4 @@ from .link import LinkSerializer
 from .school import SchoolSerializer, SchoolViewSet
 from .studyprogram import StudyProgramSerializer, StudyProgramViewSet
 from .logout import LogoutAPIView
+from .logout2 import LogoutAPIView2
