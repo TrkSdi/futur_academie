@@ -8,3 +8,6 @@ Access to Django administration is via this URL {host}/admin_future/
 
 PIERRICK  
 RACHEL
+
+
+## Djoser & JWT

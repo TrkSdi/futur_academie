@@ -1,5 +1,7 @@
 from django.contrib import admin
 from django.urls import include, path, re_path
+from django.contrib.auth import views as auth_views
+from private_app.views import LogoutAPIView, LogoutAPIView2
 
 urlpatterns = [
     # Honeypot fake admin login
@@ -9,4 +11,8 @@ urlpatterns = [
     path("API_public/", include("public_app.urls")),
     re_path(r'^auth/', include('djoser.urls')),
     re_path(r'^auth/', include('djoser.urls.jwt')),
+    path('logout/', LogoutAPIView.as_view(), name='logout'),
+    path('logout2/', LogoutAPIView2.as_view(), name='logout'),
+
+
 ]
