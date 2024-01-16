@@ -23,6 +23,6 @@ class Link(models.Model):
 
     def __str__(self):
         link = self.link_url
-        # if len(link) > 30:
-        #     link = link[0:30] + "..."
-        return f"{link}"
+        if len(link) > 30:
+            link = link[0:30] + "..."
+        return f"{self.link_type} : {link}"
