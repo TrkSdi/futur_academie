@@ -18,6 +18,7 @@ class UserSerializerPublic(serializers.ModelSerializer):
 
 
 class UserProfileFilterPublic(filters.FilterSet):
+    liked_study_program = filters.CharFilter(method='filter_by_liked_study_program')
     class Meta:
         model = UserProfile
         fields = {
@@ -27,6 +28,12 @@ class UserProfileFilterPublic(filters.FilterSet):
             "student_at__name": ["icontains"],
             "student_at__cod_aff_form": ["exact"],
         }
+
+    def filter_by_liked_study_program(self, queryset, name, value):
+        return queryset.filter(
+            user__favorites__study_program__cod_aff_form=value
+        )
+
 
 
 class UserProfileSerializerPublic(serializers.ModelSerializer):
@@ -61,9 +68,10 @@ class UserProfileSerializerPublic(serializers.ModelSerializer):
             "url_tiktok_extended",
             "url_instagram_extended",
         ]
-
+        
 
 class UserProfileViewSetPublic(viewsets.ReadOnlyModelViewSet):
+    
     queryset = UserProfile.objects.all().filter(is_public=True)
     serializer_class = UserProfileSerializerPublic
     filterset_class = UserProfileFilterPublic
