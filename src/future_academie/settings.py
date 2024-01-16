@@ -83,6 +83,13 @@ DJOSER = {
     "LOGIN_FIELD": "email",
     "SEND_ACTIVATION_EMAIL": True,
     "ACTIVATION_URL": "activate/{uid}/{token}",
+    'SERIALIZERS': {
+        'token_create': 'djoser.serializers.TokenCreateSerializer',
+        'token': 'djoser.serializers.TokenSerializer',
+        'current_user': 'djoser.serializers.UserSerializer',
+    },
+    'TOKEN_MODEL': 'rest_framework_simplejwt.tokens.RefreshToken',
+
 }
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -181,7 +188,7 @@ AUTHENTICATION_BACKENDS = [
     "django.contrib.auth.backends.ModelBackend",
 ]
 
-#SMTP CONFIGURATION
+# SMTP CONFIGURATION
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = env.str("EMAIL_HOST")
 EMAIL_PORT = env.int("EMAIL_PORT")
