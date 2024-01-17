@@ -85,8 +85,8 @@ SIMPLE_JWT = {
 DJOSER = {
     "USER_ID_FIELD": "username",
     "LOGIN_FIELD": "email",
-    #  "SEND_ACTIVATION_EMAIL": True,
-    #   "ACTIVATION_URL": "activate/{uid}/{token}",
+    "SEND_ACTIVATION_EMAIL": True,
+    "ACTIVATION_URL": "accounts/activate/{uid}/{token}",
     'SERIALIZERS': {
         'token_create': 'djoser.serializers.TokenCreateSerializer',
         'token': 'djoser.serializers.TokenSerializer',

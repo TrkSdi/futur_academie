@@ -6,7 +6,7 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView,
 )
 
-from private_app.views import LogoutAPIView, LogoutAPIView2, activate_user
+from private_app.views import LogoutAPIView, LogoutAPIView2, ActivateUser
 
 urlpatterns = [
     # Honeypot fake admin login
@@ -18,8 +18,11 @@ urlpatterns = [
     re_path(r'^auth/', include('djoser.urls.jwt')),
     path('logout/', LogoutAPIView.as_view(), name='logout'),
     path('logout2/', LogoutAPIView2.as_view(), name='logout'),
-    path('activate/<str:uid>/<str:token>/',
-         activate_user, name='activate'),
+
+    path('accounts/activate/<uid>/<token>',
+         ActivateUser.as_view({'get': 'activation'}), name='activation'),
+
+
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 

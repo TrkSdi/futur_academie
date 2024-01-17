@@ -1,29 +1,31 @@
-from django.contrib.auth import get_user_model
 from django.http import HttpResponse
 from djoser.utils import decode_uid
 from djoser.conf import settings as djoser_settings
 from rest_framework import status
 from djoser.views import UserViewSet
+from rest_framework.permissions import AllowAny
+
+from private_app.models import User
+
+from djoser.views import UserViewSet
+from rest_framework.response import Response
 
 
-def activate_user(request, uid, token):
-    """
-    Vue pour activer un compte utilisateur.
-    """
-    try:
-        uid_decoded = decode_uid(uid)
-        user = get_user_model().objects.get(pk=uid_decoded)
+class ActivateUser(UserViewSet):
+    permission_classes = [AllowAny]
 
-        activation_view = UserViewSet.as_view({'post': 'activation'})
-        activation_response = activation_view(request, uid=uid, token=token)
+    def get_serializer(self, *args, **kwargs):
+        serializer_class = self.get_serializer_class()
+        kwargs.setdefault('context', self.get_serializer_context())
 
-        if activation_response.status_code == status.HTTP_204_NO_CONTENT:
-            return HttpResponse("Votre compte a été activé avec succès!", status=status.HTTP_200_OK)
-        else:
-            return HttpResponse("Le lien d'activation est invalide ou a expiré", status=status.HTTP_400_BAD_REQUEST)
+        kwargs['data'] = {"uid": self.kwargs['uid'],
+                          "token": self.kwargs['token']}
 
-    except get_user_model().DoesNotExist:
-        return HttpResponse("Utilisateur non trouvé", status=status.HTTP_404_NOT_FOUND)
+        return serializer_class(*args, **kwargs)
 
-    except Exception as e:
-        return HttpResponse(f"Erreur d'activation: {str(e)}", status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    def activation(self, request, *args, **kwargs):
+        response = super().activation(request, *args, **kwargs)
+
+        if response.status_code == status.HTTP_204_NO_CONTENT:
+            return Response({"detail": "Votre compte a été activé avec succès!"}, status=status.HTTP_200_OK)
+        return response
