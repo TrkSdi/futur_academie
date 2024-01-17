@@ -39,7 +39,7 @@ class Command(BaseCommand):
                 longitude = school["coordonnees"]["lon"]
                 latitude = school["coordonnees"]["lat"]
                 # Create the point object with the GPS position
-                coordinates = Point(longitude, latitude, srid=4326)
+                coordinates = Point(x=longitude, y=latitude, srid=4326)
 
                 # Create an address object with the given data
                 address = Address.objects.create(
