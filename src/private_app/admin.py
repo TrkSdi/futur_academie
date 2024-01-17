@@ -46,8 +46,6 @@ class UserProfileInline(admin.TabularInline):
 
 
 class UserAdmin(admin.ModelAdmin):
-    # list_display = ('id', "user", "image_profile",
-    #                 "url_tiktok", "url_instagram", "about_me", "is_public", "student_at")
     list_display = (
         "username",
         "first_name",
