@@ -31,7 +31,7 @@ class SchoolSerializer(serializers.ModelSerializer):
 
 class SchoolFilter(filters.FilterSet):
     # Returns all results ordered by distance from the point given in format long,lat
-    distance_from = filters.CharFilter(method="filter_by_distance")
+    distance__from = filters.CharFilter(method="filter_by_distance")
     # Returns all results within the radius in km of the point given in format long,lat,radius
     distance__lte = filters.CharFilter(method="filter_distance_lte")
 
