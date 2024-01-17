@@ -83,7 +83,7 @@ SIMPLE_JWT = {
     'BLACKLIST_AFTER_ROTATION': True,
 }
 DJOSER = {
-    "USER_ID_FIELD": "username",
+    "USER_ID_FIELD": "email",
     "LOGIN_FIELD": "email",
     "SEND_ACTIVATION_EMAIL": True,
     "ACTIVATION_URL": "accounts/activate/{uid}/{token}",
