@@ -8,13 +8,13 @@ from django.utils.translation import gettext_lazy as _
 
 class CustomUserManager(BaseUserManager):
     """
-    Un manager d'utilisateur personnalisé où l'email est l'identifiant unique
-    pour l'authentification à la place du nom d'utilisateur.
+    A personalized user manager where email is the unique identifier
+    for authentication instead of the username.
     """
 
     def create_user(self, email, password=None, **extra_fields):
         """
-        Crée et sauvegarde un utilisateur avec l'email et le mot de passe donnés.
+        Creates and saves a user with the given email address and password.
         """
         if not email:
             raise ValueError(_('The Email must be set'))
