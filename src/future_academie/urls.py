@@ -14,16 +14,19 @@ urlpatterns = [
     path("admin_future/", admin.site.urls),
     path("API_private/", include("private_app.urls")),
     path("API_public/", include("public_app.urls")),
+
+
+    # account user part
+
     re_path(r'^auth/', include('djoser.urls')),
     re_path(r'^auth/', include('djoser.urls.jwt')),
-    path('logout/', LogoutAPIView.as_view(), name='logout'),
+    path('auth/logout/', LogoutAPIView.as_view(), name='logout'),
 
     path('accounts/activate/<uid>/<token>',
          ActivateUser.as_view({'get': 'activation'}), name='activation'),
 
-
-    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-
+    # to obtain (POST) refresh and access token
+    path('auth/jwt/token/', TokenObtainPairView.as_view(),
+         name='token_obtain_pair'),
 
 ]
