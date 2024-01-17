@@ -27,7 +27,6 @@ data
 
 ### Logout with simple Token
 
-{host}/logout2/ will delete the token of the user
 
 ### Tests in Postman
 
