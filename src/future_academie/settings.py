@@ -57,6 +57,8 @@ INSTALLED_APPS = [
     "django_filters",
     "rest_framework",
     "rest_framework.authtoken",
+    'rest_framework_simplejwt',
+
     'rest_framework_simplejwt.token_blacklist',
 
     # Local apps
@@ -66,8 +68,8 @@ INSTALLED_APPS = [
 REST_FRAMEWORK = {
     "DEFAULT_FILTER_BACKENDS": ["django_filters.rest_framework.DjangoFilterBackend"],
     "DEFAULT_AUTHENTICATION_CLASSES": [
-        "rest_framework.authentication.SessionAuthentication",
-        "rest_framework.authentication.TokenAuthentication",
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+
     ],
     "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework.permissions.IsAuthenticated",
@@ -75,14 +77,16 @@ REST_FRAMEWORK = {
     "DEFAULT_PAGINATION_CLASS": "private_app.pagination.MyPagination",
 }
 SIMPLE_JWT = {
-    "AUTH_HEADER_TYPES": ("JWT",),
-    "ACCESS_TOKEN_LIFETIME": timedelta(hours=3),
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=25),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+    'ROTATE_REFRESH_TOKENS': False,
+    'BLACKLIST_AFTER_ROTATION': True,
 }
 DJOSER = {
     "USER_ID_FIELD": "username",
     "LOGIN_FIELD": "email",
-    "SEND_ACTIVATION_EMAIL": True,
-    "ACTIVATION_URL": "activate/{uid}/{token}",
+    #  "SEND_ACTIVATION_EMAIL": True,
+    #   "ACTIVATION_URL": "activate/{uid}/{token}",
     'SERIALIZERS': {
         'token_create': 'djoser.serializers.TokenCreateSerializer',
         'token': 'djoser.serializers.TokenSerializer',

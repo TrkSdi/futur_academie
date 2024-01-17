@@ -1,7 +1,10 @@
 from django.contrib import admin
 from django.urls import include, path, re_path
 from django.contrib.auth import views as auth_views
-
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
 
 from private_app.views import LogoutAPIView, LogoutAPIView2, activate_user
 
@@ -17,6 +20,8 @@ urlpatterns = [
     path('logout2/', LogoutAPIView2.as_view(), name='logout'),
     path('activate/<str:uid>/<str:token>/',
          activate_user, name='activate'),
+    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 
 
 ]
