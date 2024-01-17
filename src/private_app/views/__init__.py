@@ -6,5 +6,5 @@ from .favorite import FavoriteSerializer, FavoriteViewSet
 from .link import LinkSerializer
 from .school import SchoolSerializer, SchoolViewSet
 from .studyprogram import StudyProgramSerializer, StudyProgramViewSet
-from .logout import LogoutAPIView
-from .activation import ActivateUser
+from .accounts.logout import LogoutAPIView
+from .accounts.activation import ActivateUser
