@@ -35,7 +35,8 @@ SECRET_KEY = env("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env("DEBUG")
 
-
+STATIC_URL = 'static/'  # Dossier par app
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')  # Dossier général
 ALLOWED_HOSTS = env.list("ALLOWED_HOSTS")
 
 
