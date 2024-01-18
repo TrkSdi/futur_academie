@@ -6,7 +6,7 @@ from rest_framework.response import Response
 
 class LogoutAPIView(APIView):
     permission_classes = [AllowAny]
-    """View de déconnexion qui met le refresh token dans une blacklist à la déconnexion de l'utilisateur
+    """logout view that blacklists the refresh token when the user logs out
     """
 
     def post(self, request):

@@ -22,6 +22,7 @@ urlpatterns = [
     re_path(r'^auth/', include('djoser.urls.jwt')),
     path('auth/logout/', LogoutAPIView.as_view(), name='logout'),
 
+    # activation of the account (by email)
     path('accounts/activate/<uid>/<token>',
          ActivateUser.as_view({'get': 'activation'}), name='activation'),
 

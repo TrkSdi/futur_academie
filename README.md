@@ -19,7 +19,6 @@ _Data example_
 
 ```{
             "email": "example@example.com",
-            "username": "exampleUsername",
             "password" : "examplePWD"
         }
 ```
@@ -30,7 +29,6 @@ POST {host}/auth/jwt/create/ with the same data
 
 ```{
             "email": "example@example.com",
-            "username": "exampleUsername",
             "password" : "examplePWD"
         }
 ```
