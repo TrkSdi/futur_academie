@@ -29,7 +29,7 @@ longueur_table = len(list_cod_aff_form)
 
 # ajoute l'entête au csv
 entete = "index#place dispo#taux d'acces a la formation#Nombre de voeux formules#Pourcentage de lyceens boursiers#candidats hors secteur#Taux de passage en deuxieme annee#Taux de reussite a 2/4 ans"
-with open(f"{date}-donnéesparcoursup3.csv", "a") as fichier_extract:
+with open(f"{date}-donnéesparcoursup.csv", "a") as fichier_extract:
     fichier_extract.write(entete + "\n")
 
 
@@ -143,6 +143,6 @@ for index, program in enumerate(list_cod_aff_form):
     transfert_csv = "#".join(map(str, dico))
 
     # on écrit dans le fichier csv avant de reboucler
-    with open(f"{date}-donnéesparcoursup3.csv", "a") as fichier_extract:
+    with open(f"{date}-donnéesparcoursup.csv", "a") as fichier_extract:
         fichier_extract.write(f"{transfert_csv}\n")
     num_page += 1
