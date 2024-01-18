@@ -28,7 +28,7 @@ num_page = 0
 longueur_table = len(list_cod_aff_form_short)
 
 # ajoute l'entête au csv
-entete = "index§info"
+entete = "index§info§débouché"
 with open(f"{date}-infoparcoursup.csv", "a") as fichier_extract:
     fichier_extract.write(entete + "\n")
 
@@ -54,20 +54,32 @@ for index, program in enumerate(list_cod_aff_form_short):
     infos_presentation = soup.find(
         "div", {"class": "fr-col-sm-12 fr-col-lg-6 fr-pt-3w"}
     )
+    infos_debouche = soup.find("div", {"id": "tabpanel-5-panel"})
 
     # echape l'erreur si jamais les balises ne sont pas présentes
     try:
-        div_elements = infos_presentation.find_all(
+        div_presentation = infos_presentation.find_all(
             "div", {"class": "word-break-break-word"}
         )
     except:
-        div_elements = []
+        div_presentation = []
+
+    # echape l'erreur si jamais les balises ne sont pas présentes
+    try:
+        debouches_h3 = infos_debouche.find("h3", text="Débouchés professionnels")
+    except:
+        debouches_h3 = []
 
     # dico sera les données renvoyées dans le CV à chaque boucle avec le cod aff form en premier
     dico = [program]
 
-    for div in div_elements:
+    for div in div_presentation:
         result = div.get_text()
+        dico.append(result)
+
+    for div in infos_debouche:
+        word_break_div = debouches_h3.find_next("div", class_="word-break-break-word")
+        result = word_break_div.get_text(strip=True)
         dico.append(result)
 
     # on change la liste en string avec chaque valeur séparée par un #
