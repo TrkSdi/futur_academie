@@ -57,10 +57,8 @@ INSTALLED_APPS = [
     "django_filters",
     "rest_framework",
     "rest_framework.authtoken",
-    'rest_framework_simplejwt',
-
-    'rest_framework_simplejwt.token_blacklist',
-
+    "rest_framework_simplejwt",
+    "rest_framework_simplejwt.token_blacklist",
     # Local apps
     "private_app",
     "public_app",
@@ -68,8 +66,7 @@ INSTALLED_APPS = [
 REST_FRAMEWORK = {
     "DEFAULT_FILTER_BACKENDS": ["django_filters.rest_framework.DjangoFilterBackend"],
     "DEFAULT_AUTHENTICATION_CLASSES": [
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
     ],
     "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework.permissions.IsAuthenticated",
@@ -77,22 +74,21 @@ REST_FRAMEWORK = {
     "DEFAULT_PAGINATION_CLASS": "private_app.pagination.MyPagination",
 }
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(hours=2),
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
-    'ROTATE_REFRESH_TOKENS': False,
-    'BLACKLIST_AFTER_ROTATION': True,
+    "ACCESS_TOKEN_LIFETIME": timedelta(hours=2),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+    "ROTATE_REFRESH_TOKENS": False,
+    "BLACKLIST_AFTER_ROTATION": True,
 }
 DJOSER = {
     "USER_ID_FIELD": "email",
     "LOGIN_FIELD": "email",
     "SEND_ACTIVATION_EMAIL": True,
     "ACTIVATION_URL": "accounts/activate/{uid}/{token}",
-    'SERIALIZERS': {
-        'token_create': 'djoser.serializers.TokenCreateSerializer',
-        'token': 'djoser.serializers.TokenSerializer',
-        'current_user': 'djoser.serializers.UserSerializer',
+    "SERIALIZERS": {
+        "token_create": "djoser.serializers.TokenCreateSerializer",
+        "token": "djoser.serializers.TokenSerializer",
+        "current_user": "djoser.serializers.UserSerializer",
     },
-
 }
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -192,9 +188,12 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 # SMTP CONFIGURATION
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = env.str("EMAIL_HOST")
 EMAIL_PORT = env.int("EMAIL_PORT")
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = env.str("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = env.str("EMAIL_HOST_PASSWORD")
+
+# Get root IP needed for completing favorite share url
+ROOT_IP = env.str("ROOT_IP")

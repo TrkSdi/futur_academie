@@ -75,7 +75,6 @@ class UserProfileViewSet(viewsets.ModelViewSet):
             "exp": expiration_time,
         }
         token = jwt.encode(payload, settings.SECRET_KEY, algorithm="HS256")
-        response = {
-            "temporary_url": f"http://127.0.0.1:8000/API_public/favorite/view_shared/?list={token}"
-        }
+        url = f"{settings.ROOT_IP}/API_public/favorite/view_shared/?list={token}"
+        response = {"temporary_url": url}
         return Response(response)
