@@ -20,7 +20,7 @@ with open(file_path, "r") as f:
         program_code = program["cod_aff_form"]
         list_cod_aff_form.append(program_code)
 
-# short list pour éviter les requêtes trop longues et faire tests
+# short list pour éviter les requêtes trop longues et faire des tests
 list_cod_aff_form_short = random.sample(list_cod_aff_form, 10)
 
 # variables permettant de voir l'avancer lors des requêtes
