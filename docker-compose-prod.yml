@@ -4,9 +4,8 @@ services:
     image: postgis/postgis:latest
     volumes:
       - postgres_data:/var/lib/postgresql/data
-    env_file: .env
-    ports:
-      - "5434:5432"
+    env_file: ./src/.env
+
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 10s
@@ -23,14 +22,13 @@ services:
     build:
       context: . # Répertoire racine Anthophila_dk/
       dockerfile: ./docker/Dockerfile
-    # command: gunicorn --chdir src future_academie.wsgi
 
-    command: python src/manage.py runserver 0.0.0.0:8000
+    command: gunicorn --chdir src future_academie.wsgi
     volumes:
       - .:/code
-    env_file: .env
+    env_file: ./src/.env
     ports:
-      - "8001:8000"
+      - "8000:8000"
     environment:
       - DEBUG=${DEBUG}
       - SECRET_KEY=${SECRET_KEY}
