@@ -14,13 +14,19 @@ class StudyProgramSerializer(serializers.ModelSerializer):
             "cod_aff_form",
             "name",
             "school",
-            "discipline",
             "url_parcoursup",
             "acceptance_rate",
             "L1_success_rate",
-            "insertion_rate",
-            "insertion_time_period",
             "description",
+            "diploma_earned_ontime",
+            "available_places",
+            "number_applicants",
+            "percent_scholarship",
+            "acceptance_rate_quartile",
+            "L1_success_rate_quartile",
+            "diploma_earned_ontime_quartile",
+            "percent_scholarship_quartile",
+            "job_prospects",
         ]
 
 
@@ -39,6 +45,11 @@ class StudyProgramFilter(filters.FilterSet):
             "available_places": ["gt", "lt"],
             "number_applicants": ["gt", "lt"],
             "percent_scholarship": ["gt", "lt"],
+            "acceptance_rate_quartile": ["gt", "lt"],
+            "L1_success_rate_quartile": ["gt", "lt"],
+            "diploma_earned_ontime_quartile": ["gt", "lt"],
+            "percent_scholarship_quartile": ["gt", "lt"],
+            "job_prospects": ["gt", "lt"],
         }
 
 
