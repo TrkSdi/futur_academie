@@ -87,14 +87,37 @@ class StudyProgramAdmin(admin.ModelAdmin):
         "cod_aff_form",
         "name",
         "school",
-        "discipline",
         "acceptance_rate",
         "L1_success_rate",
-        "insertion_rate",
-        "insertion_time_period",
+        "job_prospects",
+        "description",
+        "percent_scholarship_quartile",
+        "diploma_earned_ontime_quartile",
+        "L1_success_rate_quartile",
+        "acceptance_rate_quartile",
+        "diploma_earned_ontime",
+        "out_of_sector_candidates",
+        "percent_scholarship",
+        "number_applicants",
+        "available_places",
+        "city",
+        "is_selective",
     )
-    list_filter = ("discipline", "school")
-    search_fields = ("name", "cod_aff_form", "description")
+    list_filter = (
+        "school",
+        "L1_success_rate_quartile",
+        "percent_scholarship_quartile",
+        "diploma_earned_ontime_quartile",
+        "acceptance_rate_quartile",
+        "is_selective",
+    )
+    search_fields = (
+        "name",
+        "cod_aff_form",
+        "description",
+        "job_prospects",
+        "city",
+    )
 
 
 admin.site.register(Address, AddressAdmin)
