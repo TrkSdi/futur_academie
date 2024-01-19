@@ -13,7 +13,11 @@ class Address(models.Model):
         max_length=100,
         help_text="The city and more precise locality info (as required) for the address.",
     )
-    geolocation = gismodels.PointField(null=True, blank=True)
+    geolocation = gismodels.PointField(
+        null=True,
+        blank=True,
+        help_text="Longitude and latitude of the address's location.",
+    )
 
     def __str__(self):
         return f"{self.locality}, {self.postcode}, {self.street_address}"
