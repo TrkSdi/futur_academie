@@ -10,7 +10,7 @@ class StudyProgram(models.Model):
     )
     name = models.CharField(
         help_text="The name of the program of study.",
-        max_length=100,
+        max_length=150,
         null=False,
     )
     is_selective = models.BooleanField(
@@ -18,18 +18,12 @@ class StudyProgram(models.Model):
         null=True,
         blank=True,
     )
-    city = models.CharField(
-        help_text="City in which the program is located.",
-        max_length=50,
-        null=True,
-        blank=True,
+    address = models.OneToOneField(
+        "Address",
+        related_name="study_program",
+        on_delete=models.CASCADE,
+        help_text="The study program's city and GPS location.",
     )
-    geolocation = gismodels.PointField(
-        help_text="Longitude and latitude of the program location.",
-        null=True,
-        blank=True,
-    )
-
     school = models.ForeignKey(
         "School",
         help_text="FK to the school which offers the program of study.",

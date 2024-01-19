@@ -6,17 +6,24 @@ class Address(models.Model):
     """A model for storing school/program addresses and GPS locations."""
 
     street_address = models.CharField(
-        max_length=100, help_text="Building number and street name of the address."
-    )
-    postcode = models.PositiveIntegerField(help_text="Post code for the address.")
-    locality = models.CharField(
+        help_text="Building number and street name of the address.",
         max_length=100,
-        help_text="The city and more precise locality info (as required) for the address.",
-    )
-    geolocation = gismodels.PointField(
         null=True,
         blank=True,
+    )
+    postcode = models.PositiveIntegerField(
+        help_text="Post code for the address.", null=True, blank=True
+    )
+    locality = models.CharField(
+        help_text="The city and more precise locality info (as required) for the address.",
+        max_length=100,
+        null=True,
+        blank=True,
+    )
+    geolocation = gismodels.PointField(
         help_text="Longitude and latitude of the address's location.",
+        null=True,
+        blank=True,
     )
 
     def __str__(self):

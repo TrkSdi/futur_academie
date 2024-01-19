@@ -7,7 +7,7 @@ class School(models.Model):
     UAI_code = models.CharField(max_length=12, primary_key=True)
 
     name = models.CharField(
-        max_length=100, help_text="The name of the school or university."
+        max_length=150, help_text="The name of the school or university."
     )
 
     school_url = models.OneToOneField(

@@ -100,7 +100,6 @@ class StudyProgramAdmin(admin.ModelAdmin):
         "percent_scholarship",
         "number_applicants",
         "available_places",
-        "city",
         "is_selective",
     )
     list_filter = (
@@ -116,7 +115,6 @@ class StudyProgramAdmin(admin.ModelAdmin):
         "cod_aff_form",
         "description",
         "job_prospects",
-        "city",
     )
 
 
