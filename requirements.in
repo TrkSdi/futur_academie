@@ -26,3 +26,4 @@ djoser
 djangorestframework_simplejwt
 
 gunicorn
+whitenoise
