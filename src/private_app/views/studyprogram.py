@@ -33,11 +33,15 @@ class StudyProgramFilter(filters.FilterSet):
             "school": ["exact"],
             "discipline": ["exact"],
             "url_parcoursup": ["exact"],
-            "acceptance_rate": ["exact", "gt", "lt"],
-            "L1_success_rate": ["exact", "gt", "lt"],
-            "insertion_rate": ["exact", "gt", "lt"],
+            "acceptance_rate": ["gt", "lt"],
+            "L1_success_rate": ["gt", "lt"],
+            "insertion_rate": ["gt", "lt"],
             "insertion_time_period": ["icontains"],
             "description": ["icontains"],
+            "diploma_earned_ontime": ["gt", "lt"],
+            "available_places": ["gt", "lt"],
+            "number_applicants": ["gt", "lt"],
+            "percent_scholarship": ["gt", "lt"],
         }
 
 

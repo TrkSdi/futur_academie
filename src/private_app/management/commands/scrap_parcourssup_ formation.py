@@ -12,7 +12,7 @@ start = time.time()
 file_path = "./fr-esr-parcoursup.json"
 list_cod_aff_form = []
 
-with open(file_path, "r") as f:
+with open(file_path, "r", encoding="utf-8") as f:
     # Load the data
     data = json.load(f)
     # Loop through programs to add the code to the list:
@@ -20,12 +20,12 @@ with open(file_path, "r") as f:
         program_code = program["cod_aff_form"]
         list_cod_aff_form.append(program_code)
 
-# short list pour éviter les requêtes trop longues et faire des tests
+# short list pour éviter les requêtes trop longues et faire tests
 list_cod_aff_form_short = random.sample(list_cod_aff_form, 10)
 
 # variables permettant de voir l'avancer lors des requêtes
 num_page = 0
-longueur_table = len(list_cod_aff_form_short)
+longueur_table = len(list_cod_aff_form)
 
 # ajoute l'entête au csv
 entete = "index§info§débouché"
@@ -34,7 +34,7 @@ with open(f"{date}-infoparcoursup.csv", "a") as fichier_extract:
 
 
 # bouclage sur l'ensemble des adresses url présent dans le fichier parcourssup
-for index, program in enumerate(list_cod_aff_form_short):
+for index, program in enumerate(list_cod_aff_form):
     # affichage de l'avancement des requêtes
     actual_time = time.time()
     print(
@@ -54,7 +54,10 @@ for index, program in enumerate(list_cod_aff_form_short):
     infos_presentation = soup.find(
         "div", {"class": "fr-col-sm-12 fr-col-lg-6 fr-pt-3w"}
     )
-    infos_debouche = soup.find("div", {"id": "tabpanel-5-panel"})
+    try:
+        infos_debouche = soup.find("div", {"id": "tabpanel-5-panel"})
+    except:
+        infos_debouche = []
 
     # echape l'erreur si jamais les balises ne sont pas présentes
     try:
@@ -76,16 +79,19 @@ for index, program in enumerate(list_cod_aff_form_short):
     for div in div_presentation:
         result = div.get_text()
         dico.append(result)
-
-    for div in infos_debouche:
-        word_break_div = debouches_h3.find_next("div", class_="word-break-break-word")
-        result = word_break_div.get_text(strip=True)
-        dico.append(result)
-
+    try:
+        for div in infos_debouche:
+            word_break_div = debouches_h3.find_next(
+                "div", class_="word-break-break-word"
+            )
+            result = word_break_div.get_text(strip=True)
+            dico.append(result)
+    except:
+        pass
     # on change la liste en string avec chaque valeur séparée par un #
     transfert_csv = "§".join(map(str, dico))
 
     # on écrit dans le fichier csv avant de reboucler
-    with open(f"{date}-infoparcoursup.csv", "a") as fichier_extract:
+    with open(f"{date}-infoparcoursup.csv", "a", encoding="utf-8") as fichier_extract:
         fichier_extract.write(f"{transfert_csv}\n")
     num_page += 1
