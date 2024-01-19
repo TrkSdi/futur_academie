@@ -28,7 +28,7 @@ num_page = 0
 longueur_table = len(list_cod_aff_form)
 
 # ajoute l'entête au csv
-entete = "cod_aff_form§description§job_prospects"
+entete = "cod_aff_form$description$job_prospects"
 with open(f"{date}-infoparcoursup.csv", "a") as fichier_extract:
     fichier_extract.write(entete + "\n")
 
@@ -91,13 +91,13 @@ for index, program in enumerate(list_cod_aff_form):
             )
             result = word_break_div.get_text(strip=True)
             if not result:
-                result = "None§None"
+                result = "None$None"
             dico.append(result)
     except:
-        dico.append("None§None")
+        dico.append("None$None")
 
     # on change la liste en string avec chaque valeur séparée par un #
-    transfert_csv = "§".join(map(str, dico))
+    transfert_csv = "$".join(map(str, dico))
 
     # on écrit dans le fichier csv avant de reboucler
     with open(
