@@ -19,7 +19,9 @@ services:
       - PGDATA=/var/lib/postgresql/data/pgdata
   db-migration:
     container_name: db_migration
-    build: .
+    build:
+      context: . # Répertoire racine Anthophila_dk/
+      dockerfile: ./docker/Dockerfile
     command: >
       bash -c "python src/manage.py migrate --noinput  && python src/manage.py collectstatic --noinput"
 
