@@ -28,12 +28,8 @@ class Command(BaseCommand):
                 # If there is no UAI code, ignore the data
                 if not school["uai"]:
                     break
-                # Model requires a street address, so if none exists set it to NA, we can also alter the model
-                if school["adresse_uai"]:
-                    street_address = school["adresse_uai"]
-                else:
-                    street_address = "NA"
 
+                street_address = school["adresse_uai"]
                 locality = school["localite_acheminement_uai"]
                 postcode = school["code_postal_uai"]
                 longitude = school["coordonnees"]["lon"]
@@ -59,10 +55,6 @@ class Command(BaseCommand):
                     link = None
 
                 name = school["uo_lib"]
-                # CHANGE THIS AFTER DB IS UPDATED TO HOLD LARGER TEXT
-                # until then cut names which are too long to fit
-                if len(name) > 100:
-                    name = name[0:99]
 
                 # Transform the school type to the choice format expected in the model
                 type = school["secteur_d_etablissement"]
