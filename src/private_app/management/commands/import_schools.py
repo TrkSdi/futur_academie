@@ -19,7 +19,7 @@ class Command(BaseCommand):
 
     @transaction.atomic
     def handle(self, *args, **options):
-        file_path = "./fr-esr-principaux-etablissements-enseignement-superieur.json"
+        file_path = r"./src/private_app/management/commands/fr-esr-principaux-etablissements-enseignement-superieur.json"
         with open(file_path, "r") as f:
             # Load the data
             data = json.load(f)
