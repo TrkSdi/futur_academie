@@ -10,7 +10,7 @@ class StudyProgram(models.Model):
     )
     name = models.CharField(
         help_text="The name of the program of study.",
-        max_length=150,
+        max_length=300,
         null=False,
     )
     is_selective = models.BooleanField(
@@ -23,6 +23,8 @@ class StudyProgram(models.Model):
         related_name="study_program",
         on_delete=models.CASCADE,
         help_text="The study program's city and GPS location.",
+        null=True,
+        blank=True,
     )
     school = models.ForeignKey(
         "School",

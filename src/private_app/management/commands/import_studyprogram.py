@@ -101,7 +101,7 @@ class Command(BaseCommand):
                 # Création de l'objet StudyProgram
                 StudyProgram.objects.create(
                     cod_aff_form=int(program_data["cod_aff_form"]),
-                    name="test",  # program_data["program_name"],
+                    name=program_data["program_name"],
                     is_selective=selectivity,
                     address=address,
                     school=school,
