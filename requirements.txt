@@ -5,7 +5,9 @@
 #    pip-compile
 #
 asgiref==3.7.2
-    # via django
+    # via
+    #   django
+    #   django-cors-headers
 certifi==2023.11.17
     # via requests
 cffi==1.16.0
@@ -25,6 +27,7 @@ django==5.0.1
     #   -r requirements.in
     #   django-admin-honeypot-updated-2021
     #   django-axes
+    #   django-cors-headers
     #   django-filter
     #   djangorestframework
     #   djangorestframework-simplejwt
@@ -33,6 +36,8 @@ django==5.0.1
 django-admin-honeypot-updated-2021==1.2.0
     # via -r requirements.in
 django-axes==6.3.0
+    # via -r requirements.in
+django-cors-headers==4.3.1
     # via -r requirements.in
 django-environ==0.11.2
     # via -r requirements.in
@@ -93,6 +98,8 @@ social-auth-app-django==5.4.0
 social-auth-core==4.5.1
     # via social-auth-app-django
 sqlparse==0.4.4
+    # via django
+tzdata==2023.4
     # via django
 urllib3==2.1.0
     # via requests

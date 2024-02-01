@@ -55,11 +55,11 @@ INSTALLED_APPS = [
     "djoser",
     "axes",
     "admin_honeypot",
-    "django_filters",
-    "rest_framework",
+    "django_filters" "rest_framework",
     "rest_framework.authtoken",
     "rest_framework_simplejwt",
     "rest_framework_simplejwt.token_blacklist",
+    "corsheaders",
     # Local apps
     "private_app",
     "public_app",
@@ -92,6 +92,7 @@ DJOSER = {
     },
 }
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -199,3 +200,5 @@ EMAIL_HOST_PASSWORD = env.str("EMAIL_HOST_PASSWORD")
 
 # Get root IP needed for completing favorite share url
 ROOT_IP = env.str("ROOT_IP")
+
+CORS_ALLOWED_ORIGINS = ["http://localhost:4200", "http://127.0.0.1:4200"]
