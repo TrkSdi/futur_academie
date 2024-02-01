@@ -55,11 +55,11 @@ INSTALLED_APPS = [
     "djoser",
     "axes",
     "admin_honeypot",
-    "django_filters",
-    "rest_framework",
+    "django_filters" "rest_framework",
     "rest_framework.authtoken",
     "rest_framework_simplejwt",
     "rest_framework_simplejwt.token_blacklist",
+    "corsheaders",
     # Local apps
     "private_app",
     "public_app",
@@ -92,6 +92,7 @@ DJOSER = {
     },
 }
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -199,3 +200,7 @@ EMAIL_HOST_PASSWORD = env.str("EMAIL_HOST_PASSWORD")
 
 # Get root IP needed for completing favorite share url
 ROOT_IP = env.str("ROOT_IP")
+
+# When front is in prod, replace the following line by putting the prod ip below
+CORS_ALLOW_ALL_ORIGINS = True
+# CORS_ALLOWED_ORIGINS = [<prod_ip_here]
