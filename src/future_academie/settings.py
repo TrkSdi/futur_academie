@@ -201,4 +201,6 @@ EMAIL_HOST_PASSWORD = env.str("EMAIL_HOST_PASSWORD")
 # Get root IP needed for completing favorite share url
 ROOT_IP = env.str("ROOT_IP")
 
-CORS_ALLOWED_ORIGINS = ["http://localhost:4200", "http://127.0.0.1:4200"]
+# When front is in prod, replace the following line by putting the prod ip below
+CORS_ALLOW_ALL_ORIGINS = True
+# CORS_ALLOWED_ORIGINS = [<prod_ip_here]
