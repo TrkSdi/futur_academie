@@ -1,4 +1,5 @@
 # Third-party imports
+from django.db.models import Q
 from django.contrib.gis.db.models.functions import Distance
 from django.contrib.gis.geos import Point
 from django_filters import rest_framework as filters
@@ -65,6 +66,10 @@ class SchoolFilterPublic(filters.FilterSet):
     distance__from = filters.CharFilter(method="filter_by_distance")
     # Returns all results within the radius in km of the point given in format long,lat,radius
     distance__lte = filters.CharFilter(method="filter_distance_lte")
+    search_all = filters.CharFilter(
+        method="general_search",
+        label="Search by school name and description at once.",
+    )
 
     class Meta:
         model = School
@@ -76,6 +81,11 @@ class SchoolFilterPublic(filters.FilterSet):
             "address__postcode": ["icontains"],
             "address__locality": ["icontains"],
         }
+
+    def general_search(self, queryset, name, value):
+        return queryset.filter(
+            Q(name__icontains=value) | Q(description__icontains=value)
+        )
 
     def filter_by_distance(self, queryset, name, value):
         """This function accepts a value string of format long,lat. It returns a

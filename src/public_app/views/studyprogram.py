@@ -1,4 +1,5 @@
 # Third-party imports
+from django.db.models import Q
 from django_filters import rest_framework as filters
 from rest_framework import serializers, viewsets
 from rest_framework import permissions
@@ -58,12 +59,18 @@ class StudyProgramSerializerPublic(serializers.ModelSerializer):
 
 
 class StudyProgramFilterPublic(filters.FilterSet):
+    search_all = filters.CharFilter(
+        method="general_search",
+        label="Search by program name, description, or job prospects at once.",
+    )
+
     class Meta:
         model = StudyProgram
         fields = {
             "cod_aff_form": ["exact"],
             "name": ["icontains", "exact"],
             "school": ["exact"],
+            "school__name": ["icontains"],
             "url_parcoursup": ["exact"],
             "acceptance_rate": ["gt", "lt"],
             "L1_success_rate": ["gt", "lt"],
@@ -78,6 +85,13 @@ class StudyProgramFilterPublic(filters.FilterSet):
             "percent_scholarship_quartile": ["gt", "lt"],
             "job_prospects": ["gt", "lt"],
         }
+
+    def general_search(self, queryset, name, value):
+        return queryset.filter(
+            Q(name__icontains=value)
+            | Q(description__icontains=value)
+            | Q(job_prospects__icontains=value)
+        )
 
 
 class StudyProgramViewSetPublic(viewsets.ReadOnlyModelViewSet):
