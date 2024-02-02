@@ -6,10 +6,12 @@ from rest_framework import permissions
 # Local imports
 from private_app.models import StudyProgram
 from .link import LinkSerializerPublic
+from .school import SchoolSerializerPublicReduced
 
 
 class StudyProgramSerializerPublic(serializers.ModelSerializer):
     url_parcoursup_extended = LinkSerializerPublic(source="url_parcoursup")
+    school_extended = SchoolSerializerPublicReduced(source="school")
 
     class Meta:
         model = StudyProgram
@@ -17,6 +19,7 @@ class StudyProgramSerializerPublic(serializers.ModelSerializer):
             "cod_aff_form",
             "name",
             "school",
+            "school_extended",
             "url_parcoursup",
             "url_parcoursup_extended",
             "acceptance_rate",
@@ -36,6 +39,7 @@ class StudyProgramSerializerPublic(serializers.ModelSerializer):
             "cod_aff_form",
             "name",
             "school",
+            "school_extended",
             "url_parcoursup",
             "url_parcoursup_extended",
             "acceptance_rate",
