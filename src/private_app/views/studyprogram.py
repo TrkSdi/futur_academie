@@ -9,6 +9,7 @@ from rest_framework import permissions
 from private_app.models import StudyProgram
 from .address import AddressSerializer
 from .link import LinkSerializer
+from . import SchoolReducedSerializer
 
 
 class StudyProgramSerializer(serializers.ModelSerializer):
@@ -38,6 +39,14 @@ class StudyProgramSerializer(serializers.ModelSerializer):
             "percent_scholarship_quartile",
             "job_prospects",
         ]
+
+
+class StudyProgramReducedSerializer(serializers.ModelSerializer):
+    school_extended = SchoolReducedSerializer(source="school")
+
+    class Meta:
+        model = StudyProgram
+        fields = ["name", "school", "school_extended"]
 
 
 class StudyProgramFilter(filters.FilterSet):

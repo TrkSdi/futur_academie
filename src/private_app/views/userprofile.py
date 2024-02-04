@@ -9,7 +9,6 @@ from rest_framework.response import Response
 
 # Local imports
 from private_app.models import UserProfile, User
-from .favorite import FavoriteSerializer
 from rest_framework import permissions
 
 
@@ -33,7 +32,6 @@ class UserProfileFilter(filters.FilterSet):
 
 class UserProfileSerializer(serializers.ModelSerializer):
     user_extended = UserSerializer(source="user", read_only=False)
-    favorites_extended = FavoriteSerializer(source="user.favorites", many=True)
 
     class Meta:
         model = UserProfile
@@ -48,7 +46,6 @@ class UserProfileSerializer(serializers.ModelSerializer):
             "about_me",
             "is_public",
             "student_at",
-            "favorites_extended",
         ]
 
 

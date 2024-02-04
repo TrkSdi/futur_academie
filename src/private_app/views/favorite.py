@@ -2,21 +2,25 @@
 from rest_framework import serializers, viewsets
 from django_filters import rest_framework as filters
 from rest_framework import permissions
-from django.db.models import Q
 
 # Local imports
 from private_app.models import Favorite
+from . import StudyProgramReducedSerializer
+
 
 class FavoriteSerializer(serializers.ModelSerializer):
+    study_program_extended = StudyProgramReducedSerializer(source="study_program")
+
     class Meta:
         model = Favorite
-        read_only_fields = ("id",)
+        read_only_fields = ("id", "study_program_extended")
         fields = [
             "id",
             "user",
             "study_program",
             "note",
             "status",
+            "study_program_extended",
         ]
 
 
