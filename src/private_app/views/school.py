@@ -11,6 +11,19 @@ from .address import AddressSerializer
 from .link import LinkSerializer
 
 
+class SchoolReducedSerializer(serializers.ModelSerializer):
+    address_extended = AddressSerializer(source="address")
+
+    class Meta:
+        model = School
+        fields = [
+            "UAI_code",
+            "name",
+            "address_extended",
+            "school_type",
+        ]
+
+
 class SchoolSerializer(serializers.ModelSerializer):
     address_extended = AddressSerializer(source="address")
     school_url_extended = LinkSerializer(source="school_url")
