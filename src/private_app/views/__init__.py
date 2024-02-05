@@ -1,6 +1,4 @@
-from .userprofile import UserProfileSerializer, UserSerializer, UserProfileViewSet
-
-from .address import AddressSerializer, AddressViewSet
+from .link import LinkSerializer
 from .school import SchoolSerializer, SchoolReducedSerializer, SchoolViewSet
 from .studyprogram import (
     StudyProgramSerializer,
@@ -9,7 +7,10 @@ from .studyprogram import (
 )
 
 from .favorite import FavoriteSerializer, FavoriteViewSet
-from .link import LinkSerializer
+
+from .userprofile import UserProfileSerializer, UserSerializer, UserProfileViewSet
+
+from .address import AddressSerializer, AddressViewSet
 
 
 from .accounts.logout import LogoutAPIView

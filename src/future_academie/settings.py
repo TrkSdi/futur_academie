@@ -204,4 +204,9 @@ ROOT_IP = env.str("ROOT_IP")
 
 # When front is in prod, replace the following line by putting the prod ip below
 CORS_ALLOW_ALL_ORIGINS = True
-# CORS_ALLOWED_ORIGINS = [<prod_ip_here]
+CORS_ALLOWED_ORIGINS = ["http://127.0.0.1", "http://localhost"]
+
+# Customizing Axes handling of login failures
+# 15min cooloff time before attempts are reset
+AXES_COOLOFF_TIME = 0.25
+# AXES_LOCKOUT_CALLABLE = "private_app.views.lockout"

@@ -1,9 +1,3 @@
-from .userprofile import (
-    UserProfileSerializerPublic,
-    UserSerializerPublic,
-    UserProfileViewSetPublic,
-)
-
 from .address import AddressSerializerPublic, AddressViewSetPublic
 
 from .favorite import FavoriteSerializerPublic, FavoriteViewSetPublic
@@ -14,3 +8,8 @@ from .school import (
     SchoolReducedSerializerPublic,
 )
 from .studyprogram import StudyProgramSerializerPublic, StudyProgramViewSetPublic
+from .userprofile import (
+    UserProfileSerializerPublic,
+    UserSerializerPublic,
+    UserProfileViewSetPublic,
+)
