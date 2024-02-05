@@ -35,7 +35,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
     user_extended = UserSerializer(source="user", read_only=False)
     url_tiktok_extended = LinkSerializer(source="url_tiktok", read_only=False)
     url_instagram_extended = LinkSerializer(source="url_instagram", read_only=False)
-    student_at_extended = SchoolReducedSerializer(source="student_at", read_only=False)
+    student_at_extended = SchoolReducedSerializer(source="student_at", read_only=True)
 
     class Meta:
         model = UserProfile

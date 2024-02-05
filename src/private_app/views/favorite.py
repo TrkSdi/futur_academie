@@ -9,7 +9,9 @@ from . import StudyProgramReducedSerializer
 
 
 class FavoriteSerializer(serializers.ModelSerializer):
-    study_program_extended = StudyProgramReducedSerializer(source="study_program")
+    study_program_extended = StudyProgramReducedSerializer(
+        source="study_program", read_only=True
+    )
 
     class Meta:
         model = Favorite
