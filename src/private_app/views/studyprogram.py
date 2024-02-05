@@ -19,9 +19,11 @@ class StudyProgramSerializer(serializers.ModelSerializer):
         model = StudyProgram
         fields = [
             "cod_aff_form",
+
             "name",
             "school",
             "address",
+
             "address_extended",
             "url_parcoursup",
             "url_parcoursup_extended",
@@ -92,16 +94,15 @@ class StudyProgramFilter(filters.FilterSet):
         Returns:
             queryset: all matching study programms ordered by distance
         """
-        location = value.split(",")
-        long = float(location[0])
-        lat = float(location[1])
-        radius = float(location[2]) * 1000
-        geo_loc = Point(x=long, y=lat, srid=4326)
-        return (
-            queryset.annotate(distance=Distance("address__geolocation", geo_loc))
-            .filter(distance__lte=radius)
-            .order_by("distance")
-        )
+        try:
+            long, lat, radius = map(float, value.split(','))
+            radius_km = radius * 1000
+            geo_loc = Point(long, lat, srid=4326)
+            return queryset.annotate(
+                distance=Distance("address__geolocation", geo_loc)
+            ).filter(distance__lte=radius_km).order_by('distance')
+        except (ValueError, TypeError):
+            return queryset.none()
 
 
 class StudyProgramViewSet(viewsets.ModelViewSet):
@@ -111,4 +112,4 @@ class StudyProgramViewSet(viewsets.ModelViewSet):
     filter_backends = [
         filters.DjangoFilterBackend,
     ]
-    permission_classes = [permissions.IsAdminUser]
+    permission_classes = [permissions.AllowAny]

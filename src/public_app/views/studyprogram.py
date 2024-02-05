@@ -1,5 +1,7 @@
 # Third-party imports
 from django.db.models import Q
+from django.contrib.gis.db.models.functions import Distance
+from django.contrib.gis.geos import Point
 from django_filters import rest_framework as filters
 from rest_framework import serializers, viewsets
 from rest_framework import permissions
@@ -20,6 +22,7 @@ class StudyProgramSerializerPublic(serializers.ModelSerializer):
         model = StudyProgram
         fields = [
             "cod_aff_form",
+
             "name",
             "school",
             "school_extended",
@@ -63,6 +66,11 @@ class StudyProgramSerializerPublic(serializers.ModelSerializer):
 
 
 class StudyProgramFilterPublic(filters.FilterSet):
+    # Returns all results ordered by distance from the point given in format long,lat
+    distance__from = filters.CharFilter(method="filter_by_distance")
+    # Returns all results within the radius in km of the point given in format long,lat,radius
+    distance__lte = filters.CharFilter(method="filter_distance_lte")
+
     search_all = filters.CharFilter(
         method="general_search",
         label="Search by program name, description, or job prospects at once.",
@@ -96,6 +104,24 @@ class StudyProgramFilterPublic(filters.FilterSet):
             | Q(description__icontains=value)
             | Q(job_prospects__icontains=value)
         )
+
+    def filter_distance_lte(self, queryset, name, value):
+        """This function accepts a value string of format long,lat,radius with the radius
+        given in kilometers. It returns a queryset of all matching study programms within the given
+        perimeter.
+
+        Returns:
+            queryset: all matching study programms ordered by distance
+        """
+        try:
+            long, lat, radius = map(float, value.split(','))
+            radius_km = radius * 1000
+            geo_loc = Point(long, lat, srid=4326)
+            return queryset.annotate(
+                distance=Distance("address__geolocation", geo_loc)
+            ).filter(distance__lte=radius_km).order_by('distance')
+        except (ValueError, TypeError):
+            return queryset.none()
 
 
 class StudyProgramViewSetPublic(viewsets.ReadOnlyModelViewSet):
