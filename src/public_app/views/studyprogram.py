@@ -90,7 +90,7 @@ class StudyProgramFilterPublic(filters.FilterSet):
         return queryset.filter(
             Q(name__icontains=value)
             | Q(description__icontains=value)
-            | Q(job_prospects__icontains=value)
+            | Q(job_prospects__icontains=value) 
         )
 
 

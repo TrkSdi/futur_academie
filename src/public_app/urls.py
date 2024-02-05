@@ -30,4 +30,6 @@ router.register(r"userprofile", views.UserProfileViewSetPublic,
 router.register(r"favorite", views.FavoriteViewSetPublic, basename="favorite")
 
 urlpatterns = [path("", include(router.urls)),
+
+
                ]
