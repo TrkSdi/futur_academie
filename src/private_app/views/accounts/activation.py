@@ -4,7 +4,7 @@ from djoser.conf import settings as djoser_settings
 from rest_framework import status
 from djoser.views import UserViewSet
 from rest_framework.permissions import AllowAny
-
+from django.shortcuts import redirect
 from private_app.models import User
 
 from djoser.views import UserViewSet
@@ -16,10 +16,9 @@ class ActivateUser(UserViewSet):
 
     def get_serializer(self, *args, **kwargs):
         serializer_class = self.get_serializer_class()
-        kwargs.setdefault('context', self.get_serializer_context())
+        kwargs.setdefault("context", self.get_serializer_context())
 
-        kwargs['data'] = {"uid": self.kwargs['uid'],
-                          "token": self.kwargs['token']}
+        kwargs["data"] = {"uid": self.kwargs["uid"], "token": self.kwargs["token"]}
 
         return serializer_class(*args, **kwargs)
 
@@ -27,5 +26,5 @@ class ActivateUser(UserViewSet):
         response = super().activation(request, *args, **kwargs)
 
         if response.status_code == status.HTTP_204_NO_CONTENT:
-            return Response({"detail": "Votre compte a été activé avec succès!"}, status=status.HTTP_200_OK)
+            return redirect("http://localhost:4200/login")
         return response

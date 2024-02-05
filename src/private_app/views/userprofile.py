@@ -10,6 +10,7 @@ from rest_framework.response import Response
 # Local imports
 from private_app.models import UserProfile, User
 from rest_framework import permissions
+from . import LinkSerializer, SchoolReducedSerializer
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -32,20 +33,26 @@ class UserProfileFilter(filters.FilterSet):
 
 class UserProfileSerializer(serializers.ModelSerializer):
     user_extended = UserSerializer(source="user", read_only=False)
+    url_tiktok_extended = LinkSerializer(source="url_tiktok", read_only=False)
+    url_instagram_extended = LinkSerializer(source="url_instagram", read_only=False)
+    student_at_extended = SchoolReducedSerializer(source="student_at", read_only=False)
 
     class Meta:
         model = UserProfile
-        read_only_fields = ("id",)
+        read_only_fields = ("id", "student_at_extended")
         fields = [
             "id",
             "user_extended",
             "user",
             "image_profile",
             "url_tiktok",
+            "url_tiktok_extended",
             "url_instagram",
+            "url_instagram_extended",
             "about_me",
             "is_public",
             "student_at",
+            "student_at_extended",
         ]
 
 
