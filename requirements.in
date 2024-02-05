@@ -1,0 +1,30 @@
+# Django and API Framework
+Django
+django-filter
+djangorestframework
+markdown
+
+# Database
+psycopg2
+postgis
+
+# Managing image files
+pillow
+
+# Env variable configuration
+django-environ
+
+# Security
+django-admin-honeypot-updated-2021
+django-axes
+
+# Testing
+coverage
+
+# Authentication
+djoser 
+djangorestframework_simplejwt
+
+gunicorn
+whitenoise
+django-cors-headers
