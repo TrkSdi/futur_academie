@@ -8,11 +8,13 @@ from rest_framework import permissions
 from private_app.models import StudyProgram
 from .link import LinkSerializerPublic
 from .school import SchoolSerializerPublicReduced
+from private_app.views import AddressSerializer
 
 
 class StudyProgramSerializerPublic(serializers.ModelSerializer):
     url_parcoursup_extended = LinkSerializerPublic(source="url_parcoursup")
     school_extended = SchoolSerializerPublicReduced(source="school")
+    address_extended = AddressSerializer(source="address")
 
     class Meta:
         model = StudyProgram
@@ -21,6 +23,8 @@ class StudyProgramSerializerPublic(serializers.ModelSerializer):
             "name",
             "school",
             "school_extended",
+            "address_extended",
+
             "url_parcoursup",
             "url_parcoursup_extended",
             "acceptance_rate",
@@ -90,7 +94,7 @@ class StudyProgramFilterPublic(filters.FilterSet):
         return queryset.filter(
             Q(name__icontains=value)
             | Q(description__icontains=value)
-            | Q(job_prospects__icontains=value) 
+            | Q(job_prospects__icontains=value)
         )
 
 
