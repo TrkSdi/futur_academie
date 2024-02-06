@@ -32,14 +32,22 @@ class UserProfileFilter(filters.FilterSet):
 
 
 class UserProfileSerializer(serializers.ModelSerializer):
-    user_extended = UserSerializer(source="user", read_only=False)
-    url_tiktok_extended = LinkSerializer(source="url_tiktok", read_only=False)
-    url_instagram_extended = LinkSerializer(source="url_instagram", read_only=False)
+    user_extended = UserSerializer(source="user", read_only=True)
+    url_tiktok_extended = LinkSerializer(source="url_tiktok", read_only=True)
+    url_instagram_extended = LinkSerializer(source="url_instagram", read_only=True)
     student_at_extended = SchoolReducedSerializer(source="student_at", read_only=True)
 
     class Meta:
         model = UserProfile
-        read_only_fields = ("id", "student_at_extended")
+        read_only_fields = (
+            "id",
+            "student_at_extended",
+            "user_extended",
+            "url_tiktok_extended",
+            "url_instagram_extended",
+            "url_tiktok",
+            "url_instagram",
+        )
         fields = [
             "id",
             "user_extended",
