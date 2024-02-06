@@ -119,6 +119,7 @@ class StudyProgramViewSet(viewsets.ModelViewSet):
     serializer_class = StudyProgramSerializer
     filterset_class = StudyProgramFilter
     filter_backends = [
-        filters.DjangoFilterBackend,
+        filters.DjangoFilterBackend, filters.OrderingFilter
     ]
+
     permission_classes = [permissions.AllowAny]

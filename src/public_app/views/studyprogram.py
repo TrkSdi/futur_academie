@@ -5,6 +5,10 @@ from django.contrib.gis.geos import Point
 from django_filters import rest_framework as filters
 from rest_framework import serializers, viewsets
 from rest_framework import permissions
+from rest_framework.filters import OrderingFilter
+from django.db.models import Case, When, Value, FloatField
+from django.db.models import F
+
 
 # Local imports
 from private_app.models import StudyProgram
@@ -124,11 +128,29 @@ class StudyProgramFilterPublic(filters.FilterSet):
             return queryset.none()
 
 
+class NullsAlwaysLastOrderingFilter(OrderingFilter):
+    def filter_queryset(self, request, queryset, view):
+        ordering = self.get_ordering(request, queryset, view)
+        if ordering:
+            f_ordering = []
+            for field in ordering:
+                if field.startswith('-'):
+                    field_name = field[1:]
+                    f_ordering.append(F(field_name).desc(nulls_last=True))
+                else:
+                    f_ordering.append(F(field).asc(nulls_last=True))
+            return queryset.order_by(*f_ordering)
+        return queryset
+
+
 class StudyProgramViewSetPublic(viewsets.ReadOnlyModelViewSet):
+
     queryset = StudyProgram.objects.all()
     serializer_class = StudyProgramSerializerPublic
     filterset_class = StudyProgramFilterPublic
-    filter_backends = [
-        filters.DjangoFilterBackend,
-    ]
+    filter_backends = [filters.DjangoFilterBackend,
+                       NullsAlwaysLastOrderingFilter]
+
+    ordering_fields = ['acceptance_rate',
+                       'L1_success_rate', 'available_places']
     permission_classes = [permissions.AllowAny]
