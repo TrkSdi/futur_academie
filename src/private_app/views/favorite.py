@@ -1,7 +1,13 @@
 # Third-party imports
 from rest_framework import serializers, viewsets
 from django_filters import rest_framework as filters
+import jwt
+from django.conf import settings
+
+from datetime import datetime, timedelta
 from rest_framework import permissions
+from rest_framework.decorators import action
+from rest_framework.response import Response
 
 # Local imports
 from private_app.models import Favorite
@@ -54,3 +60,16 @@ class FavoriteViewSet(viewsets.ModelViewSet):
         else:
             queryset = Favorite.objects.all().filter(user=self.request.user)
         return queryset
+
+    @action(detail=False, methods=["GET"])
+    def share_favorites(self, request):
+        expiration_time = datetime.utcnow() + timedelta(days=14)
+        user_id = request.user.id.hex
+        payload = {
+            "user_id": user_id,
+            "exp": expiration_time,
+        }
+        token = jwt.encode(payload, settings.SECRET_KEY, algorithm="HS256")
+        # url = f"{settings.ROOT_IP}/API_public/favorite/view_shared/?list={token}"
+        response = {"token": token, "exp": expiration_time}
+        return Response(response)

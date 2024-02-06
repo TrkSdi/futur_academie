@@ -77,16 +77,3 @@ class UserProfileViewSet(viewsets.ModelViewSet):
         else:
             queryset = UserProfile.objects.all().filter(user=self.request.user)
         return queryset
-
-    @action(detail=False, methods=["GET"])
-    def share_favorites(self, request):
-        expiration_time = datetime.utcnow() + timedelta(days=14)
-        user_id = request.user.id.hex
-        payload = {
-            "user_id": user_id,
-            "exp": expiration_time,
-        }
-        token = jwt.encode(payload, settings.SECRET_KEY, algorithm="HS256")
-        url = f"{settings.ROOT_IP}/API_public/favorite/view_shared/?list={token}"
-        response = {"temporary_url": url}
-        return Response(response)
