@@ -2,6 +2,7 @@
 from rest_framework import serializers, viewsets
 from django_filters import rest_framework as filters
 from rest_framework import permissions
+from djoser.serializers import UserCreateSerializer as BaseUserRegistrationSerializer
 
 
 # Local imports
@@ -21,7 +22,8 @@ class UserSerializerPublic(serializers.ModelSerializer):
 
 
 class UserProfileFilterPublic(filters.FilterSet):
-    liked_study_program = filters.CharFilter(method="filter_by_liked_study_program")
+    liked_study_program = filters.CharFilter(
+        method="filter_by_liked_study_program")
 
     class Meta:
         model = UserProfile
@@ -39,7 +41,8 @@ class UserProfileFilterPublic(filters.FilterSet):
 
 class UserProfileSerializerPublic(serializers.ModelSerializer):
     user_extended = UserSerializerPublic(source="user")
-    favorites_extended = FavoriteSerializerPublic(source="user.favorites", many=True)
+    favorites_extended = FavoriteSerializerPublic(
+        source="user.favorites", many=True)
     url_tiktok_extended = LinkSerializerPublic(source="url_tiktok")
     url_instagram_extended = LinkSerializerPublic(source="url_instagram")
     student_at_extended = SchoolReducedSerializerPublic(source="student_at")
@@ -83,3 +86,8 @@ class UserProfileViewSetPublic(viewsets.ReadOnlyModelViewSet):
     filterset_class = UserProfileFilterPublic
     filter_backends = (filters.DjangoFilterBackend,)
     permission_classes = [permissions.AllowAny]
+
+
+class CustomUserRegistrationSerializer(BaseUserRegistrationSerializer):
+    class Meta(BaseUserRegistrationSerializer.Meta):
+        fields = ('email', 'password', 'first_name', 'last_name')

@@ -90,6 +90,8 @@ DJOSER = {
         "token_create": "djoser.serializers.TokenCreateSerializer",
         "token": "djoser.serializers.TokenSerializer",
         "current_user": "djoser.serializers.UserSerializer",
+        "user_create": "public_app.views.userprofile.CustomUserRegistrationSerializer",
+
     },
 }
 MIDDLEWARE = [
