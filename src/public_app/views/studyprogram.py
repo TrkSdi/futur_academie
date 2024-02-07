@@ -105,6 +105,7 @@ class StudyProgramFilterPublic(filters.FilterSet):
     def general_search(self, queryset, name, value):
         return queryset.filter(
             Q(name__icontains=value)
+            | Q(school__name__icontains=value)
             | Q(description__icontains=value)
             | Q(job_prospects__icontains=value)
         )
