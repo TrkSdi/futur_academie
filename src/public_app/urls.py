@@ -1,6 +1,7 @@
 # Third-party imports
 from django.urls import include, path
 from rest_framework import routers
+
 # Local imports
 from . import views
 
@@ -25,11 +26,10 @@ router.register(
     r"studyprogram", views.StudyProgramViewSetPublic, basename="studyprogram"
 )
 router.register(r"school", views.SchoolViewSetPublic, basename="school")
-router.register(r"userprofile", views.UserProfileViewSetPublic,
-                basename="userprofile")
+router.register(r"userprofile", views.UserProfileViewSetPublic, basename="userprofile")
 router.register(r"favorite", views.FavoriteViewSetPublic, basename="favorite")
+router.register(r"sendemail/", views.SendEmailViewSetPublic, basename="sendemail")
 
-urlpatterns = [path("", include(router.urls)),
-
-
-               ]
+urlpatterns = [
+    path("", include(router.urls)),
+]

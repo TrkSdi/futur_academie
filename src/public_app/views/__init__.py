@@ -13,3 +13,4 @@ from .userprofile import (
     UserSerializerPublic,
     UserProfileViewSetPublic,
 )
+from .sendemail import SendEmailViewSetPublic
