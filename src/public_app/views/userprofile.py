@@ -22,8 +22,7 @@ class UserSerializerPublic(serializers.ModelSerializer):
 
 
 class UserProfileFilterPublic(filters.FilterSet):
-    liked_study_program = filters.CharFilter(
-        method="filter_by_liked_study_program")
+    liked_study_program = filters.CharFilter(method="filter_by_liked_study_program")
 
     class Meta:
         model = UserProfile
@@ -41,8 +40,7 @@ class UserProfileFilterPublic(filters.FilterSet):
 
 class UserProfileSerializerPublic(serializers.ModelSerializer):
     user_extended = UserSerializerPublic(source="user")
-    favorites_extended = FavoriteSerializerPublic(
-        source="user.favorites", many=True)
+    favorites_extended = FavoriteSerializerPublic(source="user.favorites", many=True)
     url_tiktok_extended = LinkSerializerPublic(source="url_tiktok")
     url_instagram_extended = LinkSerializerPublic(source="url_instagram")
     student_at_extended = SchoolReducedSerializerPublic(source="student_at")
@@ -62,6 +60,7 @@ class UserProfileSerializerPublic(serializers.ModelSerializer):
             "is_public",
             "student_at",
             "student_at_extended",
+            "favorites_extended",
         ]
         fields = [
             "id",
@@ -76,6 +75,7 @@ class UserProfileSerializerPublic(serializers.ModelSerializer):
             "is_public",
             "student_at",
             "student_at_extended",
+            "favorites_extended",
         ]
 
 
@@ -90,4 +90,4 @@ class UserProfileViewSetPublic(viewsets.ReadOnlyModelViewSet):
 
 class CustomUserRegistrationSerializer(BaseUserRegistrationSerializer):
     class Meta(BaseUserRegistrationSerializer.Meta):
-        fields = ('email', 'password', 'first_name', 'last_name')
+        fields = ("email", "password", "first_name", "last_name")
