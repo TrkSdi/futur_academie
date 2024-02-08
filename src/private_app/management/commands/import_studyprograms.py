@@ -10,9 +10,20 @@ from django.db import transaction
 from private_app.models import Address, Link, School, StudyProgram
 
 
-def get_quartile(number, stats):
+def get_quartile(number: float, stats: list[float]) -> str:
+    """Takes a statistic and a list of the quartile cut-off points for the type of statistic
+    and returns a string indicating which quartile from Q1 (bottom 25%) to Q4 (top 25%) the
+    statistic falls in.
+
+    Args:
+        number (float): the given statistic for the study program
+        stats (list[float]): the array of quartile points for the type of statistic given
+
+    Returns:
+        str: a two-character string representing the quartile
+    """
     if not isinstance(number, float):
-        return None
+        return ""
     elif number <= stats[0]:
         return "Q1"
     elif number <= stats[1]:
@@ -29,76 +40,80 @@ class Command(BaseCommand):
     @transaction.atomic
     def handle(self, *args, **options):
         # file_path = "./study_program_data.json"
-        file_path = r"./src/private_app/management/commands/study_program_data.json"
+        file_path: str = (
+            r"./src/private_app/management/commands/study_program_data.json"
+        )
 
-        # column#0.25#0.5#0.75
-        PERCENT_ADMITTED_QS = [37.0, 60.0, 87.0]
-        DIPLOMA_EARNED_ONTIME_QS = [47.6, 58.7, 66.8]
-        PERCENT_SCHOLARSHIP_QS = [12.0, 17.0, 23.0]
-        L2_CONTINUATION_RATE = [43.6, 82.3, 85.3]
+        # Each column represents a qaurtile cut-off point #0.25#0.5#0.75
+        PERCENT_ADMITTED_QS: list[float] = [37.0, 60.0, 87.0]
+        DIPLOMA_EARNED_ONTIME_QS: list[float] = [47.6, 58.7, 66.8]
+        PERCENT_SCHOLARSHIP_QS: list[float] = [12.0, 17.0, 23.0]
+        L2_CONTINUATION_RATE: list[float] = [43.6, 82.3, 85.3]
 
         with open(file_path, "r") as f:
-            data = json.load(f)
-            total_programs = len(data)
+            data: list[dict] = json.load(f)
+            total_programs: int = len(data)
+
             for index, program_data in enumerate(data):
+                # Indicate progress in the terminal for each 100 programs imported
                 if index % 100 == 0:
-                    complete = index / total_programs * 100
+                    complete: float = index / total_programs * 100
                     print(f"Import is {complete}% completed.")
                 try:
-                    # Récupère l'objet School basé sur le code UAI
-                    school = School.objects.get(UAI_code=program_data["cod_uai"])
-                except School.DoesNotExist:
-                    locality = program_data["city"]
-                    school_address = Address.objects.create(locality=locality)
-                    school_uai = program_data["cod_uai"]
-                    if program_data["school_type"] == "Public":
-                        type = "public"
-                    else:
-                        type = "private"
-                    school_name = program_data["school_name"]
-                    link = Link.objects.create(
-                        link_type="SchoolWebsite", link_url="nonsense.com"
+                    # Link the studyProgram object to its school based on the code UAI
+                    school: School = School.objects.get(
+                        UAI_code=program_data["cod_uai"]
                     )
-                    school = School.objects.create(
+                except School.DoesNotExist:
+                    locality: str = program_data["city"]
+                    school_address: Address = Address.objects.create(locality=locality)
+                    school_uai: str = program_data["cod_uai"]
+                    if program_data["school_type"] == "Public":
+                        type: str = "public"
+                    else:
+                        type: str = "private"
+                    school_name: str = program_data["school_name"]
+                    school: School = School.objects.create(
                         UAI_code=school_uai,
                         name=school_name,
-                        description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis luctus, diam quis venenatis laoreet, dolor nunc molestie quam, eget mattis mi dui eu nisi. Fusce lacinia metus nec sapien convallis, at tempor dui rutrum. Sed ac tincidunt sem, vitae malesuada mauris. Curabitur laoreet nulla aliquam tellus egestas accumsan. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Sed vehicula vestibulum mi, sed euismod metus luctus sed. Integer sed orci at massa ullamcorper sagittis. Morbi et viverra arcu.",
+                        description="La déscription de cette établissement n'a pas encore été renseignée.",
                         address=school_address,
-                        school_url=link,
                         school_type=type,
                     )
 
-                # Création d'un objet Link pour la page Parcoursup du programme variable url
-                url = (
+                # Create a Link object for the program parcoursup page
+                url: str = (
                     "https://dossier.parcoursup.fr/Candidats/public/fiches/afficherFicheFormation?g_ta_cod="
                     + str(program_data["cod_aff_form"])
                 )
-                url_parcoursup = Link.objects.create(
+                url_parcoursup: Link = Link.objects.create(
                     link_type="Parcoursup", link_url=url
                 )
-
-                longitude = program_data["geolocation"]["lon"]
-                latitude = program_data["geolocation"]["lat"]
-                # Create the point object with the GPS position
-                coordinates = Point(x=longitude, y=latitude, srid=4326)
-                address = Address.objects.create(
+                # Create an Address object for the program
+                longitude: float = program_data["geolocation"]["lon"]
+                latitude: float = program_data["geolocation"]["lat"]
+                # SRID 4326 indicates the point object is a gps position
+                coordinates: Point = Point(x=longitude, y=latitude, srid=4326)
+                address: Address = Address.objects.create(
                     locality=program_data["city"], geolocation=coordinates
                 )
+
                 if program_data["selectivity"] == "formation sélective":
-                    selectivity = True
+                    selectivity: bool = True
                 else:
                     selectivity = False
 
                 if program_data["description"]:
-                    description = program_data["description"][0:250]
+                    description: str = program_data["description"]
                 else:
-                    description = None
+                    description = ""
 
                 if program_data["job_prospects"]:
-                    job_prospects = program_data["job_prospects"][0:250]
+                    job_prospects: str = program_data["job_prospects"]
                 else:
-                    job_prospects = None
-                # Création de l'objet StudyProgram
+                    job_prospects = ""
+
+                # Create the StudyProgram object
                 StudyProgram.objects.create(
                     cod_aff_form=int(program_data["cod_aff_form"]),
                     name=program_data["program_name"],
