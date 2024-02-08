@@ -28,7 +28,7 @@ router.register(
 router.register(r"school", views.SchoolViewSetPublic, basename="school")
 router.register(r"userprofile", views.UserProfileViewSetPublic, basename="userprofile")
 router.register(r"favorite", views.FavoriteViewSetPublic, basename="favorite")
-router.register(r"sendemail/", views.SendEmailViewSetPublic, basename="sendemail")
+router.register(r"sendemail", views.SendEmailViewSetPublic, basename="sendemail")
 
 urlpatterns = [
     path("", include(router.urls)),
