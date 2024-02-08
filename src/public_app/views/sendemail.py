@@ -1,14 +1,30 @@
 # Third-party imports
+import environ
+import os
 from rest_framework import viewsets
 from django.core.mail import send_mail
 from django.views.decorators.csrf import csrf_exempt
+from rest_framework.response import Response
+from rest_framework import status
 import json
+from rest_framework.decorators import action
+from rest_framework import permissions
+from pathlib import Path
+
+# Build paths inside the project like this: BASE_DIR / 'subdir'.
+BASE_DIR = Path(__file__).resolve().parent.parent.parent.parent
+
+env = environ.Env()
+environ.Env.read_env(os.path.join(BASE_DIR, ".env"))
 
 
 class SendEmailViewSetPublic(viewsets.ViewSet):
 
+    permission_classes = [permissions.AllowAny]
+
     @csrf_exempt
-    def send_email_view(request):
+    @action(detail=False, methods=["POST"])
+    def send_email_view(self, request):
         data = json.loads(request.body.decode("utf-8"))
         textEmail = data.get("textEmail")
         subject = data.get("subject")
@@ -22,10 +38,11 @@ class SendEmailViewSetPublic(viewsets.ViewSet):
             subject,
             textEmail,
             recipient,
-            ["damienvialla@yahoo.fr"],
+            [env.str("EMAIL_HOST_USER"), "damienvialla@yahoo.fr"],
             fail_silently=False,
             auth_user=None,
             auth_password=None,
             connection=None,
             html_message=None,
         )
+        return Response(status=status.HTTP_200_OK)
