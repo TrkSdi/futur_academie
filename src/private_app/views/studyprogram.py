@@ -9,6 +9,7 @@ from rest_framework import permissions
 from private_app.models import StudyProgram
 from .address import AddressSerializer
 from .link import LinkSerializer
+from . import SchoolReducedSerializer
 
 
 class StudyProgramSerializer(serializers.ModelSerializer):
@@ -19,9 +20,11 @@ class StudyProgramSerializer(serializers.ModelSerializer):
         model = StudyProgram
         fields = [
             "cod_aff_form",
+
             "name",
             "school",
             "address",
+
             "address_extended",
             "url_parcoursup",
             "url_parcoursup_extended",
@@ -38,6 +41,14 @@ class StudyProgramSerializer(serializers.ModelSerializer):
             "percent_scholarship_quartile",
             "job_prospects",
         ]
+
+
+class StudyProgramReducedSerializer(serializers.ModelSerializer):
+    school_extended = SchoolReducedSerializer(source="school")
+
+    class Meta:
+        model = StudyProgram
+        fields = ["name", "school", "school_extended"]
 
 
 class StudyProgramFilter(filters.FilterSet):
@@ -92,16 +103,15 @@ class StudyProgramFilter(filters.FilterSet):
         Returns:
             queryset: all matching study programms ordered by distance
         """
-        location = value.split(",")
-        long = float(location[0])
-        lat = float(location[1])
-        radius = float(location[2]) * 1000
-        geo_loc = Point(x=long, y=lat, srid=4326)
-        return (
-            queryset.annotate(distance=Distance("address__geolocation", geo_loc))
-            .filter(distance__lte=radius)
-            .order_by("distance")
-        )
+        try:
+            long, lat, radius = map(float, value.split(','))
+            radius_km = radius * 1000
+            geo_loc = Point(long, lat, srid=4326)
+            return queryset.annotate(
+                distance=Distance("address__geolocation", geo_loc)
+            ).filter(distance__lte=radius_km).order_by('distance')
+        except (ValueError, TypeError):
+            return queryset.none()
 
 
 class StudyProgramViewSet(viewsets.ModelViewSet):
@@ -109,6 +119,7 @@ class StudyProgramViewSet(viewsets.ModelViewSet):
     serializer_class = StudyProgramSerializer
     filterset_class = StudyProgramFilter
     filter_backends = [
-        filters.DjangoFilterBackend,
+        filters.DjangoFilterBackend, filters.OrderingFilter
     ]
-    permission_classes = [permissions.IsAdminUser]
+
+    permission_classes = [permissions.AllowAny]

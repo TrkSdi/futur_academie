@@ -14,12 +14,28 @@ from .studyprogram import StudyProgramSerializerPublic
 
 
 class FavoriteSerializerPublic(serializers.ModelSerializer):
-    study_program_extended = StudyProgramSerializerPublic(source="study_program")
+    study_program_extended = StudyProgramSerializerPublic(
+        source="study_program", read_only=True
+    )
 
     class Meta:
         model = Favorite
-        fields = ["study_program", "status", "study_program_extended"]
-        read_only_fields = ["study_program", "status", "study_program_extended"]
+        read_only_fields = (
+            "id",
+            "user",
+            "study_program",
+            "note",
+            "status",
+            "study_program_extended",
+        )
+        fields = [
+            "id",
+            "user",
+            "study_program",
+            "note",
+            "status",
+            "study_program_extended",
+        ]
 
 
 class FavoriteFilterPublic(filters.FilterSet):

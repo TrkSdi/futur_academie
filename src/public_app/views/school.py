@@ -61,6 +61,25 @@ class SchoolSerializerPublic(serializers.ModelSerializer):
         ]
 
 
+class SchoolReducedSerializerPublic(serializers.ModelSerializer):
+    address_extended = AddressSerializerPublic(source="address")
+
+    class Meta:
+        model = School
+        fields = [
+            "UAI_code",
+            "name",
+            "address_extended",
+            "school_type",
+        ]
+        read_only_fields = [
+            "UAI_code",
+            "name",
+            "address_extended",
+            "school_type",
+        ]
+
+
 class SchoolFilterPublic(filters.FilterSet):
     # Returns all results ordered by distance from the point given in format long,lat
     distance__from = filters.CharFilter(method="filter_by_distance")

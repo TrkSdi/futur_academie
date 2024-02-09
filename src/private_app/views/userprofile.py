@@ -9,8 +9,8 @@ from rest_framework.response import Response
 
 # Local imports
 from private_app.models import UserProfile, User
-from .favorite import FavoriteSerializer
 from rest_framework import permissions
+from . import LinkSerializer, SchoolReducedSerializer
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -32,23 +32,35 @@ class UserProfileFilter(filters.FilterSet):
 
 
 class UserProfileSerializer(serializers.ModelSerializer):
-    user_extended = UserSerializer(source="user", read_only=False)
-    favorites_extended = FavoriteSerializer(source="user.favorites", many=True)
+    user_extended = UserSerializer(source="user", read_only=True)
+    url_tiktok_extended = LinkSerializer(source="url_tiktok", read_only=True)
+    url_instagram_extended = LinkSerializer(source="url_instagram", read_only=True)
+    student_at_extended = SchoolReducedSerializer(source="student_at", read_only=True)
 
     class Meta:
         model = UserProfile
-        read_only_fields = ("id",)
+        read_only_fields = (
+            "id",
+            "student_at_extended",
+            "user_extended",
+            "url_tiktok_extended",
+            "url_instagram_extended",
+            "url_tiktok",
+            "url_instagram",
+        )
         fields = [
             "id",
             "user_extended",
             "user",
             "image_profile",
             "url_tiktok",
+            "url_tiktok_extended",
             "url_instagram",
+            "url_instagram_extended",
             "about_me",
             "is_public",
             "student_at",
-            "favorites_extended",
+            "student_at_extended",
         ]
 
 
@@ -65,16 +77,3 @@ class UserProfileViewSet(viewsets.ModelViewSet):
         else:
             queryset = UserProfile.objects.all().filter(user=self.request.user)
         return queryset
-
-    @action(detail=False, methods=["GET"])
-    def share_favorites(self, request):
-        expiration_time = datetime.utcnow() + timedelta(days=14)
-        user_id = request.user.id.hex
-        payload = {
-            "user_id": user_id,
-            "exp": expiration_time,
-        }
-        token = jwt.encode(payload, settings.SECRET_KEY, algorithm="HS256")
-        url = f"{settings.ROOT_IP}/API_public/favorite/view_shared/?list={token}"
-        response = {"temporary_url": url}
-        return Response(response)

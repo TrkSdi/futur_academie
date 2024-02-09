@@ -15,6 +15,8 @@ class School(models.Model):
         related_name="school",
         on_delete=models.CASCADE,
         help_text="A url to the school's website.",
+        null=True,
+        blank=True,
     )
 
     description = models.TextField(
