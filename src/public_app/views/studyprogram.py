@@ -105,6 +105,7 @@ class StudyProgramFilterPublic(filters.FilterSet):
     def general_search(self, queryset, name, value):
         return queryset.filter(
             Q(name__icontains=value)
+            | Q(school__name__icontains=value)
             | Q(description__icontains=value)
             | Q(job_prospects__icontains=value)
         )
@@ -150,7 +151,7 @@ class StudyProgramViewSetPublic(viewsets.ReadOnlyModelViewSet):
     filterset_class = StudyProgramFilterPublic
     filter_backends = [filters.DjangoFilterBackend,
                        NullsAlwaysLastOrderingFilter]
-
+# to have a filter "order by"
     ordering_fields = ['acceptance_rate',
-                       'L1_success_rate', 'available_places']
+                       'L1_success_rate', 'available_places', 'diploma_earned_ontime', 'number_applicants', 'percent_scholarship']
     permission_classes = [permissions.AllowAny]
