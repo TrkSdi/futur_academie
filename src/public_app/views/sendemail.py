@@ -14,26 +14,27 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent.parent
 
+# env is an instance of environ
 env = environ.Env()
 environ.Env.read_env(os.path.join(BASE_DIR, ".env"))
 
 
 class SendEmailViewSetPublic(viewsets.ViewSet):
 
+    # permission
     permission_classes = [permissions.AllowAny]
 
     @csrf_exempt
     @action(detail=False, methods=["POST"])
     def send_email_view(self, request):
+        # recovery json file
         data = json.loads(request.body.decode("utf-8"))
+        # recovery json keys
         textEmail = data.get("textEmail")
         subject = data.get("subject")
         recipient = data.get("recipient")
-        print(
-            f"data : {data}\n, texte : {textEmail}\n, sujet : {subject}\n, expediteur : {recipient}"
-        )
 
-        # Envoyer l'email
+        # function send email
         send_mail(
             subject,
             textEmail,
@@ -45,4 +46,5 @@ class SendEmailViewSetPublic(viewsets.ViewSet):
             connection=None,
             html_message=None,
         )
+        # send email waits an answer
         return Response(status=status.HTTP_200_OK)
