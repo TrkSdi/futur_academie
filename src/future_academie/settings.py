@@ -87,7 +87,7 @@ DJOSER = {
     "SEND_ACTIVATION_EMAIL": True,
     'DOMAIN': 'https://api.futureacademie.tech',
 
-    "ACTIVATION_URL": "/accounts/activate/{uid}/{token}",
+    "ACTIVATION_URL": "accounts/activate/{uid}/{token}",
     "SERIALIZERS": {
         "token_create": "djoser.serializers.TokenCreateSerializer",
         "token": "djoser.serializers.TokenSerializer",
