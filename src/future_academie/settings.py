@@ -204,6 +204,9 @@ EMAIL_HOST_PASSWORD = env.str("EMAIL_HOST_PASSWORD")
 # Get root IP needed for completing favorite share url
 ROOT_IP = env.str("ROOT_IP")
 
+CSRF_TRUSTED_ORIGINS = ['https://api.futureacademie.tech']
+CSRF_COOKIE_DOMAIN = '.futureacademie.tech'
+
 # When front is in prod, replace the following line by putting the prod ip below
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOWED_ORIGINS = ["http://127.0.0.1", "http://localhost",
