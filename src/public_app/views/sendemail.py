@@ -39,7 +39,7 @@ class SendEmailViewSetPublic(viewsets.ViewSet):
             subject,
             textEmail,
             recipient,
-            [env.str("EMAIL_HOST_USER"), "damienvialla@yahoo.fr"],
+            [env.str("EMAIL_HOST_USER")],
             fail_silently=False,
             auth_user=None,
             auth_password=None,

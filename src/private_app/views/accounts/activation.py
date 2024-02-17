@@ -27,5 +27,5 @@ class ActivateUser(UserViewSet):
         response = super().activation(request, *args, **kwargs)
 
         if response.status_code == status.HTTP_204_NO_CONTENT:
-            return redirect("http://152.228.219.128/login")
+            return redirect("https://futureacademie.tech/login")
         return response
