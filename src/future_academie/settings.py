@@ -38,7 +38,7 @@ DEBUG = env("DEBUG")
 STATIC_URL = "static/"  # Dossier par app
 STATIC_ROOT = os.path.join(BASE_DIR, "static")  # Dossier général
 ALLOWED_HOSTS = env.list("ALLOWED_HOSTS")
-DOMAIN = env("ROOT_IP")
+DOMAIN = env("DOMAIN")
 
 # Application definition
 
